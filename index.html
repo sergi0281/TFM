@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botó de Redirecció</title>
+    <script>
+        function redirigir() {
+            var terme = document.getElementById("inputTerme").value;
+            if (terme.trim() !== "") {
+                var url = "https://hpo.jax.org/browse/search?q=" + encodeURIComponent(terme) + "&navFilter=all";
+                window.location.href = url;
+            } else {
+                alert("Introdueix un terme de cerca!");
+            }
+        }
+    </script>
+</head>
+<body>
+    <p> hello world! </p>
+     <input type="text" id="inputTerme" placeholder="Introdueix un terme">	
+    <button onclick="redirigir()">Clica'm</button>
+</body>
+</html>
