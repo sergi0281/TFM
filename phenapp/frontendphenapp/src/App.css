@@ -1,0 +1,11 @@
+.App{
+  background-color: #28657C;
+}
+.App-header{
+  display: block;
+  position: realtive; 
+  z-index: 10;
+}
+.App-main{
+  position: realtive; 
+}
