@@ -26,3 +26,9 @@
   pointer-events: none;
 }
 
+.button{
+  background-color: #EC9736;
+  color: white;
+  border-radius: 15px;
+  cursor: pointer;
+}  
