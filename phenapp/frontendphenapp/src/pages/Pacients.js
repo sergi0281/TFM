@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useNavigate, useParams } from "react-router-dom";
-import './Login.css'; 
+import './Pacients.css'; 
 import { Navigation } from "../components/Navigation";
 import logo from "../logos/logo.png";
 
-function Login() {
+function Pacients() {
+  const navigate = useNavigate()
   return (
     <div className="App">
       <header className="App-header">
@@ -17,11 +18,12 @@ function Login() {
       </header>
       <main className="App-main">
         <p>
-          Aquí realitzaríem la verificació del login i sortiria la
-          pàgina principal del clínic que s'ha logat  
-        </p>   
+          Aquí mostrem els diferents Pacients que tenim 
+        </p>
+        <button className="button" onClick = {() => {navigate('/');}}>Torna
+        </button>
       </main>
     </div>
   );
 }
-export default Login;
+export default Pacients;

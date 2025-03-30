@@ -1,4 +1,10 @@
-body{
-    background-color: #202020
-    color = white
-  }
+.containerClinics{
+  display: flex;  /* Elements en fila */
+  gap: 20px;  /* Espai entre elements */
+}
+.estilClinic{
+  background-color: yellow;
+  width: 5cm;   /* Amplada de 5 cm */
+  height: 5cm;  /* Alçada de 5 cm */
+  border: 1px solid black; /* Vora de 1 píxel de gruix, de color negre */
+}
