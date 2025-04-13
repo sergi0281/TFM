@@ -1,8 +1,6 @@
 from django.db import models
 #from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
-
 # Create your models here.
 
 class Message(models.Model):
@@ -44,12 +42,27 @@ class Clinic(AbstractBaseUser):
     def __str__(self):
         return self.nom
     
+#class Pacient(models.Model):
+#    nom = models.CharField(max_length=100)
+#    email = models.EmailField(unique=True)
+
+#    def __str__(self):
+#        return self.nom
 class Pacient(models.Model):
-    nom = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
+    SEXE_CHOICES = [
+        ('M', 'Masculí'),
+        ('F', 'Femení'),
+        ('O', 'Altres')
+    ]
+    nom = models.CharField(max_length=255)
+    cognom = models.CharField(max_length=255)
+    codi_pacient = models.CharField(max_length=255, unique=True)
+    dni = models.CharField(max_length=20, unique=True)
+    sexe = models.CharField(max_length=1, choices=SEXE_CHOICES)
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nom
+        return f"{self.nom} {self.cognom} ({self.codi_pacient})"
 
 #class Log(models.Model):
 #    accio = models.TextField()

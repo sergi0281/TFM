@@ -3,7 +3,6 @@ import logo from "../logos/logo.png";
 import { BrowserRouter, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import {useEffect, useState} from "react"; //amb el useState mostraré les variables
 //import {getClinics} from "./Clinicsapi"
-import './ClinicsPage.css'; 
 
 function ClinicsPage(){
     const navigate = useNavigate()

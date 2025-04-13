@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useNavigate, useParams } from "react-router-dom";
-import './Register.css'; 
 import logo from "../logos/logo.png";
 
 function RegisterOK() {
@@ -20,7 +19,7 @@ function RegisterOK() {
           L'usuari s'ha registra correctament
         </p>
         <p>
-          Benvolgut doctor
+          Benvingut a l'aplicació. Ara ja pot fer login 
         </p> 
         <button className="button" onClick = {() => {navigate('/');}}>Torna  
         </button> 

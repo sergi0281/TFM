@@ -5,10 +5,13 @@ import App from './App';
 import Login from "./pages/Login"; 
 import Register from "./pages/Register";  
 import RegisterOK from "./pages/RegisterOK";  
-import Pacients from "./pages/Pacients";  
+import Pacients from "./pages/Pacients"; 
+import InfoPacient from "./pages/InfoPacient";  
 import Termes from "./pages/Termes";
-import ClinicsFormPage from "./pages/ClinicsFormPage";
+import InicialClinic from "./pages/InicialClinic";
 import reportWebVitals from './reportWebVitals';
+import NouPacient from './components/NouPacient';
+import Confirmacio from './components/Confirmacio';
 import { BrowserRouter, Routes, Route }  from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -23,7 +26,10 @@ root.render(
       <Route path="/pages/RegisterOK" element={<RegisterOK />} />
       <Route path="/pages/Pacients" element={<Pacients />} />
       <Route path="/pages/Termes" element={<Termes />} />
-      <Route path="/pages/ClinicsFormPage" element={<ClinicsFormPage />} />
+      <Route path="/pages/InicialClinic" element={<InicialClinic />} />
+      <Route path="/pages/InfoPacient" element={<InfoPacient />} />
+      <Route path="/components/NouPacient" element={<NouPacient />} />
+      <Route path="/components/Confirmacio" element={<Confirmacio />} />
     </Routes>
   </BrowserRouter>
   //</React.StrictMode>

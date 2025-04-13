@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useNavigate, useParams } from "react-router-dom";
-import './Termes.css'; 
 import { Navigation } from "../components/Navigation";
 import logo from "../logos/logo.png";
 

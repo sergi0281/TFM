@@ -13,20 +13,9 @@ class ClinicSerializer(serializers.ModelSerializer):
         #fields = '__all__'  ## 
         fields = ['nom','password', 'email']
 
-    #def create(self, validated_data):
-        # Xifra la contrasenya abans de guardar-la
-    #    user = Clinic(
-    #        nom=validated_data['nom'],
-    #        email=validated_data['email'],
-    #        password=validated_data['password']
-    #    )
-    #    user.set_password(validated_data['password'])
-    #    user.save()
-    #    return user
-    
-    #def validate(self, data):
-        # Intentem autenticar l'usuari
-    #    user = authenticate(nom=data['nom'], password=data['password'])
-    #    if user is None:
-    #        raise serializers.ValidationError("Invalid credentials")
-    #    return user
+class PacientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pacient
+        #fields = '__all__'  ## 
+        fields = ['id','nom','cognom', 'codi_pacient','dni','sexe','clinic']
+        

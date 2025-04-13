@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes, useNavigate, useHistory, useParams } from "react-router-dom";
+import { Link, useNavigate, useHistory, useParams } from "react-router-dom";
 import {useForm} from "react-hook-form" //per agafar dades del formulari
 import './App.css'; 
 import {creaClinic} from "./pages/Clinicsapi"
@@ -18,29 +18,21 @@ import Hello from "./components/Hello";
 
 function App() {
   const navigate = useNavigate()
-  //const history = useHistory()
-  //const handleClick = () => history.push('./pages/Register')
-  //const handleClick2 = () => history.push('./pages/Login')
-  //si poso el useNavigate la pàgina no es visualitza, només el css
-  //calia posar el Router a la pàgina index
-  //const {register, handleSubmit, formState:{
-  //  errors  
-  //}} = useForm()
-
-  //const onSubmit = handleSubmit(async data =>{
-    //console.log(data)
-  //  const res = await creaClinic(data)
-  //})
   
   return (
     <div className="App">
-      
-      
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <div className="App-logo">
+          <img src={logo} className="App-logo" alt="logo" />
+        </div>
         <div className="App-principal">
           <h1>Benvingut a phenapp!</h1>  
         </div> 
+        <div className="App-logreg">
+          <p><a href="/pages/Login">Login</a>/<a href="/pages/Register">Registre</a></p>
+          <p><Link to="/pages/Login">Login</Link>/<Link to="/pages/Register">Registre</Link></p>
+        </div>
+        
       </header>
       <main className="App-main">
         <p>
