@@ -1,18 +1,17 @@
 //import React from "react";
 
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Routes, useNavigate, useParams } from "react-router-dom";
-import App from '../App';
-import { Navigation } from "../components/Navigation";
-import logo from "../logos/logo.png";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import axios from 'axios';
 
 function Register() {
   const navigate = useNavigate()
   const [inputs, setInputs] = useState({
     nom:"",
-    pass:"",
-    mail:"",
+    password:"",
+    email:"",
   });
   const handleChange = (event) => {
     const name = event.target.name;
@@ -21,18 +20,16 @@ function Register() {
   }
   const handleSubmit = (event) => {
     event.preventDefault();
-    const name = event.target.nom.value;
-    const password = event.target.pass.value;
+    //const name = event.target.nom.value;
+    //const password = event.target.pass.value;
     // a name i password tinc les coses que ha introduït l'usuari
     console.log(inputs.nom);
-    console.log(inputs.pass);
-    console.log(inputs.mail);
-    //https://github.com/desphixs/JWT-Django-Rest-Framework-React/blob/master/frontend/src/views/Loginpage.js
-    //axios.get("http://localhost:8000/phenapp/clinics/?nom=${sergi}",
+    console.log(inputs.password);
+    console.log(inputs.email);
     axios.post('http://localhost:8000/api/clinics/register/', {
         nom: inputs.nom,
-        password: inputs.pass,
-        email: inputs.mail
+        password: inputs.password,
+        email: inputs.email,
     
       },
       {
@@ -42,7 +39,6 @@ function Register() {
       })
       .then(response => {
         console.log(response.data);
-        //console.log("Dades rebudes:", JSON.stringify(response.data, null, 2));  // Formatat bonic
       })
       .catch(error => {
         console.error('Error obtenint usuari:', error);
@@ -50,12 +46,7 @@ function Register() {
   }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div className="App-principal">
-          <h1>Benvingut a phenapp!</h1>  
-        </div> 
-      </header>
+      <Header />
       <main className="App-main">
         <p>
           Registre a l'aplicació
@@ -67,20 +58,21 @@ function Register() {
           </input>
           <br/>
           <label>Password:</label>
-          <input type="text" id="inputPass" name="pass"
+          <input type="text" id="inputPass" name="password"
             placeholder="Introdueix el password" onChange={handleChange} > 
           </input>
           <br/>
           <label>Correu:</label>
-          <input type="text" id="inputMail" name="mail"
+          <input type="text" id="inputMail" name="email"
             placeholder="Introdueix el mail" onChange={handleChange} > 
           </input>
           <br/>
-          <button className="button" type="submit" onClick = {() => {navigate('/pages/RegisterOK');}}>Registre</button>
+          <button className="button" type="submit" onClick = {() => {navigate('/components/RegisterOK');}}>Registre</button>
           <button className="button" onClick = {() => {navigate('/');}}>Torna
           </button> 
         </form>
       </main>
+      <Footer />
     </div>
   );
 }

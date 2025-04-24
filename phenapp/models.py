@@ -42,12 +42,20 @@ class Clinic(AbstractBaseUser):
     def __str__(self):
         return self.nom
     
-#class Pacient(models.Model):
-#    nom = models.CharField(max_length=100)
-#    email = models.EmailField(unique=True)
+class Feature(models.Model):
+    codi = models.CharField(max_length=255)
+    nom = models.CharField(max_length=255)
 
-#    def __str__(self):
-#        return self.nom
+    def __str__(self):
+        return self.nom
+
+class Disease(models.Model):
+    codi = models.CharField(max_length=255)
+    nom = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.nom
+    
 class Pacient(models.Model):
     SEXE_CHOICES = [
         ('M', 'Masculí'),
@@ -60,6 +68,8 @@ class Pacient(models.Model):
     dni = models.CharField(max_length=20, unique=True)
     sexe = models.CharField(max_length=1, choices=SEXE_CHOICES)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
+    caracteristiques = models.ManyToManyField(Feature, blank=True)
+    malalties = models.ManyToManyField(Disease, blank=True)
 
     def __str__(self):
         return f"{self.nom} {self.cognom} ({self.codi_pacient})"

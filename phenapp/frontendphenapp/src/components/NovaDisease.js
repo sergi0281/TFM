@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes, useNavigate, useLocation, useHistory, useParams } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "./Header";
 
-function NouPacient() {
+function NovaMalaltia() {
     // es modifica cada cop que canvia el valor del camp
     const navigate = useNavigate();
     const location = useLocation();
-    const nomclinic = location.state?.nom; 
-    const idclinic = location.state?.id;
-    console.log("el nom del clínic a crear pacient és:")
-    console.log(nomclinic)  //el nom del clínic és correcte
+    const clinic = location.state?.clinic; 
+    const id = location.state?.pacient; 
+    const idclinic = location.state?.idclinic;
+    console.log("el id del pacient  a nava disease és:")
+    console.log(id)
+    console.log("el id del clínic a crear pacient és:")
+    console.log(idclinic)  //el nom del clínic és correcte
       
     const [inputs, setInputs] = useState({
         nom:"",
+        codi:"",
       });
     //const [mostrar, setMostrar] = useState(false);
     const handleChange = (event) => {
@@ -24,13 +28,12 @@ function NouPacient() {
     
     const handleSubmit = (event) => {
       event.preventDefault();
-      axios.post('http://localhost:8000/api/accio_pacient/', {
-          nom: inputs.nom,
-          cognom: inputs.cognom,
-          codi_pacient: inputs.codi,
-          dni: inputs.dni,
-          sexe: inputs.sexe,
-          clinic: idclinic,
+      axios.post('http://localhost:8000/api/malalties/', {
+        codiMalaltia: inputs.codi,
+        nomMalaltia: inputs.nom,
+        nomclinic: clinic,
+        clinic: idclinic,
+        pacient: id,
       },
       {
         headers: {
@@ -40,9 +43,12 @@ function NouPacient() {
       .then(response => {
         console.log("hola")
         console.log(response.data);
+        console.log(idclinic);
+        console.log(clinic);
+        console.log("aquests han estat les dades del clínicdx")
         navigate('/pages/InicialClinic', { state: { 
                           id: idclinic,
-                          nom: nomclinic } });
+                          nom: clinic } });
       })
       .catch(error => {
         console.error('Error obtenint usuari:', error);
@@ -53,39 +59,30 @@ function NouPacient() {
         <Header />
         <main className="App-main">
           <p>
-            Afegeix el nou Pacient
+            Afegeix la nova malaltia
           </p>
           <form onSubmit={handleSubmit}>
-            <label>Nom:</label>
-            <input type="text" id="inputNom"
-              name="nom" onChange={handleChange}
-            />
-            <br/>
-            <label>Cognom:</label>
-            <input type="text" id="inputCognom" 
-              name="cognom" onChange={handleChange}
-            />
             <label>Codi:</label>
-            <input type="text" id="inputCodi" 
+            <input type="text" id="codiMalaltia"
               name="codi" onChange={handleChange}
             />
-            <label>DNI:</label>
-            <input type="text" id="inputDNI" 
-              name="dni" onChange={handleChange}
-            />
-            <label>Sexe:</label>
-            <input type="text" id="inputSexe" 
-              name="sexe" onChange={handleChange}
-            />
             <br/>
-            <button className="button" type="submit">Nou</button>
+            <label>Nom de la malaltia:</label>
+            <input type="text" id="nomMalaltia" 
+              name="nom" onChange={handleChange}
+            />
+            
+            <br/>
+            <button className="button" type="submit">Nova</button>
             <br/>
           </form>
   
-          <button className="button" onClick = {() => {navigate('/');}}>Torna
+          <button className="button" onClick = {() => {
+            navigate('/pages/InfoPacient');
+          }}>Torna
           </button>
         </main>
       </div>
     );
   }
-  export default NouPacient;
+  export default NovaMalaltia;

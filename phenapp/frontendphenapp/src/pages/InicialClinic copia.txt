@@ -21,10 +21,10 @@ function InicialClinic(){
   console.log(nom)
   console.log(id)
   const [pacients, setPacients] = useState([]);
-  //const [mostrar, setMostrar] = useState(false);
-  //const handleClick = () => {
-  //  setMostrar(true);
-  //};
+  const [mostrar, setMostrar] = useState(false);
+  const handleClick = () => {
+    setMostrar(true);
+  };
   useEffect(() => {
     axios.post('http://localhost:8000/api/pacients/', 
       {
@@ -45,7 +45,7 @@ function InicialClinic(){
       .catch(error => {
         console.error('Error obtenint usuari:', error);
       });
-  },[]); //aquí es tanca el useEffect 
+    }); //aquí es tanca el useEffect 
     return(
         <div className="App">
             <Header />

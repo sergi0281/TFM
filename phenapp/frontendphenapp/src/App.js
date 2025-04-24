@@ -1,64 +1,18 @@
-//import React from "react";
-
-import React, { useState, useEffect } from "react";
-import ReactDOM from 'react-dom/client';
-import { Link, useNavigate, useHistory, useParams } from "react-router-dom";
-import {useForm} from "react-hook-form" //per agafar dades del formulari
 import './App.css'; 
-import {creaClinic} from "./pages/Clinicsapi"
 // si el export en Login.js està al final no posem claus; si el emporta està al principi posem claus
-import Login from "./pages/Login";
 import './pages/Login'
 import './pages/Register'
-import './components/Hello'
-import Register from "./pages/Register";
-import { Navigation } from "./components/Navigation";
-import logo from "./logos/logo.png";
-import Hello from "./components/Hello";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Main from "./components/Main";
 
 function App() {
-  const navigate = useNavigate()
   
   return (
     <div className="App">
-      <header className="App-header">
-        <div className="App-logo">
-          <img src={logo} className="App-logo" alt="logo" />
-        </div>
-        <div className="App-principal">
-          <h1>Benvingut a phenapp!</h1>  
-        </div> 
-        <div className="App-logreg">
-          <p><a href="/pages/Login">Login</a>/<a href="/pages/Register">Registre</a></p>
-          <p><Link to="/pages/Login">Login</Link>/<Link to="/pages/Register">Registre</Link></p>
-        </div>
-        
-      </header>
-      <main className="App-main">
-        <p>
-          Phenapp és un pàgina que permet a un clínic introduir termes de HPO
-        </p>    
-        <p>
-          Pots iniciar sessió o registrar-te si encara no ho has fet
-        </p>
-        
-        <div>
-          <Hello text="bye world" />
-        </div>
-
-        <button className="button" onClick = {() => {navigate('./pages/Login');}}>Login
-        </button>
-        <button className="button" onClick = {() => {navigate('./pages/Register');}}>Register
-        </button>
-        <button className="button" onClick = {() => {navigate('./pages/ClinicsPage');}}>Clinics
-        </button>
-        
-        
-      </main>
-          
-      <footer className="App-footer">
-        <p>Sobre nosaltres</p>
-      </footer>
+      <Header />
+      <Main />
+      <Footer />
     </div>
   );
 }

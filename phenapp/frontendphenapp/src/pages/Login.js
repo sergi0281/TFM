@@ -1,21 +1,16 @@
 //import React from "react";
 
 import React, { useState, useEffect } from "react";
-import ReactDOM from 'react-dom/client';
-import { Link, useNavigate, useHistory, useParams } from "react-router-dom";
-import {useForm} from "react-hook-form" //per agafar dades del formulari
-import logo from "../logos/logo.png";
-import Hello from "../components/Hello";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import axios from 'axios';
 
 function Login() {
-  //const url = axios.create({
-  //  baseURL: 'http://localhost:8000/api/'
-  //})
   const navigate = useNavigate()
   const [inputs, setInputs] = useState({
       nom:"",
-      pass:"",
+      password:"",
   });
   // es modifica cada cop que canvia el valor del camp
   const handleChange = (event) => {
@@ -26,26 +21,26 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const name = event.target.nom.value;
-    const password = event.target.pass.value;
-    // a name i password tinc les coses que ha introduït l'usuari
+    const password = event.target.password.value;
+    
     console.log(inputs.nom);
-    console.log(inputs.pass);
+    console.log(inputs.password);
     console.log(name);
     console.log(password);
     axios.post('http://localhost:8000/api/clinics/login/', {
         nom: inputs.nom,
-        password: inputs.pass,
+        password: inputs.password,
     },
     {
       headers: {
-          'Content-Type': 'application/json'  // Indicar que és JSON
+          'Content-Type': 'application/json'  
       }
     })
     .then(response => {
       console.log("hola")
-      console.log(response.data);  //{message: 'Login correcte', user: {…}}
+      console.log(response.data);  
       const clinic_id = response.data.user.id; 
-      //navigate('/pages/InicialClinic', { state: { nom: inputs.nom } });
+      
       navigate('/pages/InicialClinic', { state: { 
                     nom: inputs.nom,
                     id: clinic_id } });
@@ -55,20 +50,13 @@ function Login() {
       console.error('Error obtenint usuari:', error);
     });
   }
-  //botó per cridar un component 
-  //<button className="button" onClick={() => {<Hello text={inputs.nom}/>}}>Login Component
-  //</button>
   return (
     <div className="App">
-      <header className="App-header">
-        <div className="App-logo">
-          <img src={logo} className="App-logo" alt="logo" />
-        </div>
+      <Header />
+      <main className="App-main">
         <div className="App-principal">
           <h1>Benvingut a phenapp!</h1>  
-        </div> 
-      </header>
-      <main className="App-main">
+        </div>
         <p>
           Posa el teu nom i la teva contrassenya per accedir a la teva pàgina inicial de phenapp. 
           Si encara no tens un compte actiu amb nosaltres, no oblidis registrar-te!  
@@ -83,13 +71,13 @@ function Login() {
           <br/>
           <label>Password:</label>
           <input type="text" id="inputPass" 
-            name="pass"
-            value={inputs.pass || ""} 
+            name="password"
+            value={inputs.password || ""} 
             onChange={handleChange}
           />
           <label>Mail:</label>
           <input type="text" id="inputMail" 
-            name="mail"
+            name="email"
             value={inputs.mail || ""} 
             onChange={handleChange}
           />
@@ -100,13 +88,8 @@ function Login() {
 
         <button className="button" onClick = {() => {navigate('/');}}>Torna
         </button>
-        <button className="button"><Link to="/">TornaLink</Link>
-        </button>
-        <button className="button" onClick = {() => {navigate('/pages/Pacients');}}>Pacients
-        </button>
-        <button className="button" onClick = {() => {navigate('/pages/Termes');}}>HPOs
-        </button>
-      </main>
+        </main>
+      <Footer />
     </div>
   );
 }

@@ -3,17 +3,24 @@
   color: white;
 }
 .App-header{
-  display: block;
-  position: relative; 
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;            
   z-index: 10;
 }
 .App-logo {
-  width: 20vw;  /* 15% de l'amplada de la finestra */
+  width: 20vw; 
   height: auto;
-  pointer-events: none;
+  float: right;
+}
+.App-tancar{
+  width: 2vw;
+  height: auto;
 }
 .App-logreg{
+  width: 20vw;
   text-align: right;
+  margin-right: 0;
 }
 a{
   color: white;
@@ -25,9 +32,11 @@ a{
 .App-footer{
   padding-top: 5%;
   padding-left: 5%;
+  align-items: center;
   position: relative; 
 }
 .App-principal{
+  display: block;
   padding-left: 5%;
   justify-content: center;
   align-items: center;
@@ -46,7 +55,7 @@ a{
   width: 200px;   
 }
 .App-user {
-  max-width: 100%;   /* Assegura't que la imatge no sobrepassi l'amplada del seu contenidor */
+  max-width: 30%;   /* Assegura't que la imatge no sobrepassi l'amplada del seu contenidor */
   height: auto;      /* Manté l'aspecte de la imatge sense distorsionar-la */
 }
 .pacient{
@@ -61,14 +70,25 @@ a{
 }
 
 .pacientCarpeta{
-    background-image: url('./logos/carpeta.png'); /* ajusta el path segons on tens la imatge */
-    background-size: cover;     /* adapta la imatge al contenidor */
-    background-position: center; /* centra la imatge */
-    background-repeat: no-repeat;
-    width: 200px;
-    height: 200px;
+    display: flex;
+    width:70%;
     color: black; /* per si vols posar text al damunt */
     align-items: center;
     justify-content: center;
 }
 
+.componentPacient{
+    width: 250px;
+}
+
+.malalties{
+    display: block;
+    width:50%;
+    float: left;
+}
+
+.termes{
+    display: block;
+    width:50%;
+    float: left;
+}
