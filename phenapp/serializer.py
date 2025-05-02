@@ -31,5 +31,5 @@ class PacientSerializer(serializers.ModelSerializer):
             model = Pacient
             
             #fields = '__all__'  ## 
-            fields = ['id','nom','cognom', 'codi_pacient','dni','sexe','clinic','caracteristiques','malalties']
+            fields = ['id','nom','cognom', 'codi_pacient','dni','sexe','clinic','caracteristiques','malalties','gen','malaltia']
         

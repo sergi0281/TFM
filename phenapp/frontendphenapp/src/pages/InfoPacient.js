@@ -59,11 +59,13 @@ function InfoPacient(){
             <p> COGNOM PACIENT: {cognom} </p>
             <p> CODI PACIENT: {codi} </p>
         </div>
-        <div>
-            <Termes id={id} caracteristiques={caracteristiques} clinic={clinic} idclinic={idclinic} />
-            <Malalties id={id} malalties={malalties} clinic={clinic} idclinic={idclinic}/>
+        <div className="termesmalalties">
+            <Termes nom= {nom} cognom={cognom} codi={codi} id={id} malalties={malalties} caracteristiques={caracteristiques} clinic={clinic} idclinic={idclinic} />
+        </div>   
+        <div> 
+            <Malalties nom= {nom} cognom={cognom} codi={codi} id={id} malalties={malalties} caracteristiques={caracteristiques} clinic={clinic} idclinic={idclinic}/>
         </div>
-        <div>
+        <div className="botonsInfoPacient">
             <button className="button" onClick = {() => {navigate('/pages/InicialClinic',
                 {
                     state: {

@@ -55,7 +55,7 @@ a{
   width: 200px;   
 }
 .App-user {
-  max-width: 30%;   /* Assegura't que la imatge no sobrepassi l'amplada del seu contenidor */
+  max-width: 25%;   /* Assegura't que la imatge no sobrepassi l'amplada del seu contenidor */
   height: auto;      /* Manté l'aspecte de la imatge sense distorsionar-la */
 }
 .pacient{
@@ -74,21 +74,57 @@ a{
     width:70%;
     color: black; /* per si vols posar text al damunt */
     align-items: center;
-    justify-content: center;
+    justify-content: left;
 }
 
 .componentPacient{
-    width: 250px;
+    width: 100px;
+}
+.componentPacientimg{
+  width: 50px;
 }
 
 .malalties{
     display: block;
-    width:50%;
+    width:100%;
     float: left;
 }
 
 .termes{
     display: block;
-    width:50%;
-    float: left;
+    width:100%;
+    float:left;
+}
+.caracteristiques{
+  display: block;
+  width:100%;
+  height: 20%
+}
+.botons{
+  display:block;
+  width:100%;
+}
+.botonsInfoPacient{
+  display:block;
+  width:100%;
+  margin-top: 5px;
+}
+.terme{
+  display:bock;
+  width: 20%;
+  float: left;
+  margin: 5px;
+  border-radius: 1px white;
+  background: yellow
+}
+.terme1{
+  display:bock;
+  width: 80%;
+  float: left;
+}
+.terme2{
+  display:bock;
+  width: 20%;
+  float: left;
+  border: 1px white;
 }

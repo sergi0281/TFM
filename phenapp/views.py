@@ -7,13 +7,18 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import check_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
-# Create your views here.
+from django.views.decorators.csrf import csrf_exempt
+from .peticio_ollama import query_ollama
+from .models import Pacient
+
+import json
 
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework import viewsets
+from collections import Counter
 from .serializer import ClinicSerializer
 from .serializer import PacientSerializer
 from .serializer import FeatureSerializer
@@ -26,7 +31,7 @@ from .models import Disease
 logger = logging.getLogger(__name__)
 
 def home(request):
-    return Response("Hola, això és phenapp al iniciar django!")
+    return HttpResponse("<p>Servidor django pel backend de phenease</p>")
 
 def pagina(request):
     return Response("Una altra pàgina de django")
@@ -39,99 +44,140 @@ class ClinicView(viewsets.ModelViewSet):
     serializer_class = ClinicSerializer
     queryset = Clinic.objects.all()
 
-@api_view(['GET','POST','DELETE'])
+# Create your views here.
+@csrf_exempt
+def predir_gen(request):
+    print("entro a predir gen")
+    if request.method == 'POST':
+        print(request)
+        #print(request.body)
+        body = json.loads(request.body)
+        #caracteristiques = body.get('caracteristiques', '')
+
+        #prompt = f"Predicció del gen amb HPO {caracteristiques}?"
+        #caracteristiques = body.get('caracteristiques', [])
+        caracteristiques = body.get('caracteristiques', '')
+        print("caracteristiques rebudes:", caracteristiques)
+        
+        # Assegura't que sigui string
+        #caracteristiques_str = ', '.join(caracteristiques)
+
+        #prompt = f"Predicció del gen amb els següents trets HPO: {caracteristiques_str}. Quin gen és el més probable?"
+        #prompt = f"Dona l'identificador d'un sol gen (només un, per exemple GJB2) donades les següents característiques {caracteristiques} Retorna només una paraula, l'identificador del gen"
+        prompt="list 5 cities from arrounde the world and their countries"
+        
+        resposta = query_ollama(prompt,"mistral")
+
+        print("la resposta és:")
+        return JsonResponse({'resposta': resposta})
+    return JsonResponse({'error': 'Només s’accepten peticions POST'}, status=405)
+
+def gen_counts(request):
+    idclinic=request.GET.get("idclinic")
+    print("el id del clinic és")
+    print(idclinic)
+    pacients = Pacient.objects.filter(clinic=idclinic)
+    gens = [p.gen for p in pacients if p.gen]
+    count = Counter(gens)
+    print("vaig a carregar dades")
+    data = [{"gen": gen, "count": count[gen]} for gen in count]
+    print(data)
+    return JsonResponse(data, safe=False)
+
+@api_view(['GET'])
 @permission_classes([AllowAny])
-def accio_terme(request):
+def llistar_termes(request):
     print("estic a la funció termes")
+    #print(idpacient)
     #print("la request és:")
     #print(request)
     #print("final")
-    print(request.data)
+    #print(request.data)
     #logger.info(f"Request data: {request.data}")
     
     if request.method == 'GET':
         print("estic al get de termes")
-        termes = Feature.objects.all()
-        serializer = FeatureSerializer(termes, many=True)
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        print("estic al post de termes")
-        terme = request.data.get('codiTerme')
-        terme2 = request.data.get('nomTerme')
-        pacientid = request.data.get('pacient')
-        idclinic = request.data.get('clinic')
-        nomclinic = request.data.get('nomclinic')
-        print("els termes són:")
-        print(terme)  ## obtinc això
-        print(terme2) 
-        print(pacientid)
-        print(idclinic)
-        print(nomclinic)
-        ## [{'id': 1, 'codi': 'HP:1', 'nom': 'prova1'}, {'id': 2, 'codi': 'HP:2', 'nom': 'prova2'}]
-        # Filtrar només els camps que t'interessen
-        data_filtrada = {
-            'codi': request.data.get('codiTerme'),
-            'nom': request.data.get('nomTerme')
-        }
-        print("la dada filtrada és:")
-        print(data_filtrada)
-        
-        if Feature.objects.filter(codi=terme).exists():
-            print("Ja existeix")
-        else:
-            print("No existeix")
-        
-            serializer = FeatureSerializer(data=data_filtrada)
-            if serializer.is_valid():
-                serializer.save()
-                print(serializer.data)
-                #return Response(serializer.data, status=201)
-            else:
-                print("errors en el serializer")
-                logger.error(f"Invalid data: {serializer.errors}")
-                return Response(serializer.errors, status=400)
-
-        #clinic =  request.data.get('clinic')
-        #print("el clínic és")
-        #print(clinic)
-        print("anem a buscar el pacient")
-        print(pacientid)
-        pacient = Pacient.objects.get(id=pacientid)  # o com el busquis
-        print(pacient)
-        print("anem a buscar el feature")
-        feature = Feature.objects.get(codi=terme)  # o com el trobis
-        print(feature)
-        
-        print("ara farem la inserció")
-        pacient.caracteristiques.add(feature)
-
-        serializer = PacientSerializer(pacient)  
-
-        return Response(serializer.data, status=201)
-   
-    elif request.method == 'DELETE':
-        print("estic al post d'afegir per eliminar")
-        print("imprimeixo la petició que m'ha arribat")
-        print(request.data)
-        idpacient = request.data.get('id')  # Agafem l'id del pacient
-        idterme = request.data.get('idterme')
-        print("el id del pacient es:")
-        print(idpacient)
-        print("el id del terme es:")
-        print(idterme)
-        
+        id_pacient = request.GET.get('idpacient')
         try:
-            pacient = Pacient.objects.get(id=idpacient)
+            pacient = Pacient.objects.get(id=id_pacient)
         except Pacient.DoesNotExist:
-            return Response({'error': 'Pacient no trobat'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Pacient no trobat'}, status=404)
 
-        feature = Feature.objects.get(id=idterme)  # o com el trobis
-        print(feature)
+        caracteristiques = pacient.caracteristiques.all()  
+        serializer = FeatureSerializer(caracteristiques, many=True)
+        return Response(serializer.data)
         
-        print("ara farem la deleció")
-        pacient.caracteristiques.remove(feature)
-        return Response({'message': 'Pacient eliminat correctament'}, status=status.HTTP_204_NO_CONTENT)
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def afegir_terme(request):       
+    print("estic al post de termes")
+    print(request.data)
+    coditerme = request.data.get('codiTerme')
+    nomterme = request.data.get('nomTerme')
+    id = request.data.get('id')
+    idclinic = request.data.get('idclinic')
+    clinic = request.data.get('clinic')
+    print("els termes són:")
+    print(coditerme)  ## obtinc això
+    print(nomterme) 
+    print(id)
+    print(idclinic)
+    print(clinic)
+    ## [{'id': 1, 'codi': 'HP:1', 'nom': 'prova1'}, {'id': 2, 'codi': 'HP:2', 'nom': 'prova2'}]
+    # Filtrar només els camps que t'interessen
+    data_filtrada = {
+        'codi': request.data.get('codiTerme'),
+        'nom': request.data.get('nomTerme')
+    }
+    print("la dada filtrada és:")
+    print(data_filtrada)
+        
+    if Feature.objects.filter(codi=coditerme).exists():
+        print("Ja existeix")
+    else:
+        print("No existeix")
+        
+        serializer = FeatureSerializer(data=data_filtrada)
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+        else:
+            logger.error(f"Invalid data: {serializer.errors}")
+            return Response(serializer.errors, status=400)
+
+    pacient = Pacient.objects.get(id=id)  
+    feature = Feature.objects.get(codi=coditerme) 
+        
+    print("afegim el feature al pacient")
+    pacient.caracteristiques.add(feature)
+
+    serializer = PacientSerializer(pacient)  
+    return Response(serializer.data, status=201)
+
+@api_view(['DELETE'])
+@permission_classes([AllowAny])
+def eliminar_terme(request):
+    print("estic al post d'afegir per eliminar")
+    print("imprimeixo la petició que m'ha arribat")
+    print(request.data)
+    idpacient = request.data.get('id')  # Agafem l'id del pacient
+    idterme = request.data.get('idterme')
+    print("el id del pacient es:")
+    print(idpacient)
+    print("el id del terme es:")
+    print(idterme)
+        
+    try:
+        pacient = Pacient.objects.get(id=idpacient)
+    except Pacient.DoesNotExist:
+        return Response({'error': 'Pacient no trobat'}, status=status.HTTP_404_NOT_FOUND)
+
+    feature = Feature.objects.get(id=idterme)  # o com el trobis
+    print(feature)
+        
+    print("ara farem la deleció")
+    pacient.caracteristiques.remove(feature)
+    return Response({'message': 'Pacient eliminat correctament'}, status=status.HTTP_204_NO_CONTENT)
 
    
 @api_view(['GET','POST'])

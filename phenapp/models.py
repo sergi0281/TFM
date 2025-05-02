@@ -43,11 +43,11 @@ class Clinic(AbstractBaseUser):
         return self.nom
     
 class Feature(models.Model):
-    codi = models.CharField(max_length=255)
+    codi = models.CharField(max_length=255,unique=True)
     nom = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.nom
+        return self.codi
 
 class Disease(models.Model):
     codi = models.CharField(max_length=255)
@@ -62,17 +62,21 @@ class Pacient(models.Model):
         ('F', 'Femení'),
         ('O', 'Altres')
     ]
-    nom = models.CharField(max_length=255)
-    cognom = models.CharField(max_length=255)
+    nom = models.CharField(max_length=255, blank=True)
+    cognom = models.CharField(max_length=255, blank=True)
     codi_pacient = models.CharField(max_length=255, unique=True)
-    dni = models.CharField(max_length=20, unique=True)
+    dni = models.CharField(max_length=20, blank=True)
     sexe = models.CharField(max_length=1, choices=SEXE_CHOICES)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
     caracteristiques = models.ManyToManyField(Feature, blank=True)
     malalties = models.ManyToManyField(Disease, blank=True)
+    malaltia = models.CharField(max_length=255, unique=False, blank=True)
+    gen = models.CharField(max_length=255, unique=False, blank=True)
 
     def __str__(self):
         return f"{self.nom} {self.cognom} ({self.codi_pacient})"
+
+        #fields = '__all__'
 
 #class Log(models.Model):
 #    accio = models.TextField()

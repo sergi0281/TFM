@@ -11,10 +11,11 @@ import Termes from "./pages/Termes";
 import InicialClinic from "./pages/InicialClinic";
 import reportWebVitals from './reportWebVitals';
 import NouPacient from './components/NouPacient';
-import Confirmacio from './components/Confirmacio';
+import ConfirmacioDelPac from './components/ConfirmacioDelPac';
 import Malalties from './components/Malalties';
 import NouTerme from './components/NouTerme';
 import NovaDisease from './components/NovaDisease';
+import GenPredit from './components/GenPredit';
 
 import { BrowserRouter, Routes, Route }  from "react-router-dom";
 
@@ -32,11 +33,12 @@ root.render(
       <Route path="/pages/InicialClinic" element={<InicialClinic />} />
       <Route path="/pages/InfoPacient" element={<InfoPacient />} />
       <Route path="/components/NouPacient" element={<NouPacient />} />
-      <Route path="/components/Confirmacio" element={<Confirmacio />} />
+      <Route path="/components/ConfirmacioDelPac" element={<ConfirmacioDelPac />} />
       <Route path="/components/Termes" element={<Termes />} />
       <Route path="/components/Malalties" element={<Malalties />} />
       <Route path="/components/NouTerme" element={<NouTerme />} />
-      <Route path="/components/NovaDisease" element={<NovaDisease />} />    
+      <Route path="/components/NovaDisease" element={<NovaDisease />} />  
+      <Route path="/components/GenPredit" element={<GenPredit />} />     
     </Routes>
   </BrowserRouter>
   //</React.StrictMode>
