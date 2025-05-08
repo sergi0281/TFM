@@ -1,0 +1,130 @@
+.App{
+  background-color: #28657C;
+  color: white;
+}
+.App-header{
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;            
+  z-index: 10;
+}
+.App-logo {
+  width: 20vw; 
+  height: auto;
+  float: right;
+}
+.App-tancar{
+  width: 2vw;
+  height: auto;
+}
+.App-logreg{
+  width: 20vw;
+  text-align: right;
+  margin-right: 0;
+}
+a{
+  color: white;
+}
+.App-main{
+  position: relative; 
+}
+
+.App-footer{
+  padding-top: 5%;
+  padding-left: 5%;
+  align-items: center;
+  position: relative; 
+}
+.App-principal{
+  display: block;
+  padding-left: 5%;
+  justify-content: center;
+  align-items: center;
+}
+
+.App-sessio {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  height: 100px;   
+  width: 200px;   
+}
+.App-user {
+  max-width: 25%;   
+  height: auto;     
+}
+.pacient{
+  background-color: #f0f0f0;
+  height: 100px;
+  width:100px;
+  display: inline-block;
+  color: black;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pacientCarpeta{
+    display: flex;
+    width:70%;
+    color: black; 
+    align-items: center;
+    justify-content: left;
+}
+
+.componentPacient{
+    width: 100px;
+}
+.componentPacientimg{
+  width: 50px;
+}
+
+.malalties{
+    display: block;
+    width:100%;
+    float: left;
+}
+
+.termes{
+    display: block;
+    width:100%;
+    float:left;
+}
+.caracteristiques{
+  display: block;
+  width:100%;
+  height: 20%
+}
+.botons{
+  display:block;
+  width:100%;
+}
+.botonsInfoPacient{
+  display:block;
+  width:100%;
+  margin-top: 5px;
+}
+.terme{
+  display:bock;
+  width: 20%;
+  float: left;
+  margin: 5px;
+  border-radius: 1px white;
+  background: yellow
+}
+.terme1{
+  display:bock;
+  width: 80%;
+  float: left;
+}
+.terme2{
+  display:bock;
+  width: 20%;
+  float: left;
+  border: 1px white;
+}

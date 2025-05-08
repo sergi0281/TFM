@@ -7,19 +7,18 @@ function Termes(props){
     const location = useLocation();
     const navigate = useNavigate();
     //const id = location.state?.id;
-    const nom = props.nom
-    const cognom = props.cognom
     const id = props.id;
     const codi = props.codi;
     const caracteristiques = props.caracteristiques;
-    const malalties = props.malalties;
     const clinic = props.clinic;
     const idclinic = props.idclinic;
-    console.log("entrem a termes i tenim");
-    console.log(id);  //id del pacient
+    const gen = props.gen;
+    const malaltia = props.malaltia;
+    console.log("entrem a termes i tenim com a clínic");
+    //console.log(id);  //id del pacient
     console.log(clinic) //nom de clínic
     console.log(idclinic) //id de clínic
-    console.log(caracteristiques);
+    //console.log(caracteristiques);
 
     const handleDelete = (idterme) => {
         //event.preventDefault();
@@ -31,10 +30,7 @@ function Termes(props){
             console.log("terme eliminat: ");
         });
     }
-    //    }); //aquí es tanca el useEffect
-
-    //const handleClick = (event) => {
-    //    event.preventDefault();
+    
     useEffect(() => {
         console.log("el id del pacient al useEffect de termes")
         console.log(id)
@@ -94,10 +90,9 @@ function Termes(props){
                             idclinic: idclinic,
                             id: id,
                             caracteristiques: caracteristiques,
-                            malalties: malalties,
-                            nom: nom,
-                            cognom: cognom,
                             codi: codi,
+                            gen: gen,
+                            malaltia: malaltia
                         }
                     }
                     );}}>
@@ -110,9 +105,6 @@ function Termes(props){
                             idclinic: idclinic,
                             id: id,
                             caracteristiques: caracteristiques,
-                            malalties: malalties,
-                            nom: nom,
-                            cognom: cognom,
                             codi: codi,
                         }
                     }
@@ -125,4 +117,3 @@ function Termes(props){
     )
 }
 export default Termes;
-      

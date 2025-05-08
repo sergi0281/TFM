@@ -7,21 +7,18 @@ function NouTerme() {
     // es modifica cada cop que canvia el valor del camp
     const navigate = useNavigate();
     const location = useLocation();
-    const { idclinic, clinic, id, nom, cognom, codi, caracteristiques, malalties } = location.state || {};
-    //const nomclinic = location.state?.clinic; 
-    //const idclinic = location.state?.idclinic;
-    //const id = location.state?.id;
-    //const nom = location.state?.nom;
-    //const cognom = location.state?.cognom;
-    console.log("es dades a nou terme és idclinic,nomclinic,idpacient:")
+    const { idclinic, clinic, id, codi, caracteristiques, gen, malaltia } = location.state || {};
+    console.log("les dades a nou terme és idclinic,nomclinic,idpacient:")
     console.log(idclinic) 
     console.log(clinic)
-    console.log(id)
-    console.log("caracgterístiques")
-    console.log(caracteristiques)
-    console.log("malalties")
-    console.log(malalties)
-    console.log("fina")
+    //console.log(id)
+    //console.log("característiques")
+    //console.log(caracteristiques)
+    //console.log("codi")
+    //console.log(codi)
+    //console.log("fina")
+    //console.log(gen)
+    //console.log(malaltia)
     
     //aquí comencem a posar les comandes per fer suggeriments
     const [termes, setTermes] = useState([]);
@@ -95,9 +92,6 @@ function NouTerme() {
       console.log('Nom:', inputValue);
     };
   
-
-
-    //fi del nou codi
     const [inputs, setInputs] = useState({
         nom:"",
         codi:"",
@@ -127,19 +121,27 @@ function NouTerme() {
       },
       )
       .then(response => {
-     
-      if (caracteristiques && malalties) {
+      console.log("inicio la resposta de afegri terme");
+      //const idclinicr=response.data.idclinic;
+      console.log(idclinic)
+      const idr = response.data.id;
+      const codir = response.data.codi;
+      const caracteristiquesr = response.data.caracteristiques;
+      console.log("el id clinic quan torno de afegir terme es")
+      console.log(idclinic)
+      console.log(idr)
+      console.log(codir)
+      console.log(caracteristiquesr)
+      console.log("fi de les dades de quan torno d'afegir terme")
+      if (caracteristiques) {
         navigate('/pages/InfoPacient', 
           { state: { 
             idclinic: idclinic,
             nom: clinic,
-            id: id,
-            nom: nom,
-            cognom: cognom,
-            codi: codi,
-            caracteristiques: caracteristiques,
-            malalties: malalties,
-          } 
+            id: idr,
+            codi: codir,
+            caracteristiques: caracteristiquesr,
+            } 
           });
       } else {
         console.warn("Algunes dades falten, assegura't que totes les variables es carreguen correctament!");
@@ -187,8 +189,17 @@ function NouTerme() {
           )}
 
           <button className="button" onClick = {() => {
-            navigate('/pages/InfoPacient');
-          }}>Torna
+            navigate('/pages/InfoPacient'
+              ,{ 
+                state: {
+                        clinic: clinic,
+                        idclinic: idclinic,
+                        id: id,
+                        caracteristiques: caracteristiques,
+                        codi: codi,
+                    }
+                }
+          );}}>Torna
           </button>
         </main>
       </div>

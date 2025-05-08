@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'coreapi',
     'myapp',
-    'phenapp'
+    'phenapp',
+    'phenease'
 ]
 
 MIDDLEWARE = [

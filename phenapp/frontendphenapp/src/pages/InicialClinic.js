@@ -9,9 +9,12 @@ import Hello from "../components/Hello";
 import Pacient from "../components/Pacient";
 import Logo from "../components/Logo";
 import Sessio from "../components/Sessio";
+import GraficaBarres from "../components/GraficaBarres";
+import PacientsPerGen from "../components/PacientsPerGen";
+import TretsComuns from "../components/TretsComuns";
 import axios from 'axios';
 import NouPacient from '../components/NouPacient';
-import Header from "../components/Header";
+import HeaderLogat from "../components/HeaderLogat";
 
 function InicialClinic(){
   const navigate = useNavigate()
@@ -21,18 +24,8 @@ function InicialClinic(){
   console.log("el nom i el id del clínic a inicial clínic és:")
   console.log(nom)
   console.log(id)
+  
   const [pacients, setPacients] = useState([]);
-  const [data, setData] = useState([]);
-  const agruparPacients = (llista) => {
-    return llista.reduce((acc, pacient) => {
-      const gen = pacient.gen || 'Desconegut';
-      if (!acc[gen]) acc[gen] = [];
-      acc[gen].push(pacient);
-      return acc;
-    }, {});
-  };
-
-  const pacientsGen = agruparPacients(pacients);
   
   useEffect(() => {
     axios.post('http://localhost:8000/api/pacients/', 
@@ -56,34 +49,15 @@ function InicialClinic(){
       });
   },[]); //aquí es tanca el useEffect 
 
-  useEffect(() => {
-    axios.get(`http://localhost:8000/api/gens_count/?idclinic=${id}`)
-      .then(res => setData(res.data))
-      .catch(err => console.error(err));
-  }, []);
-
     return(
         <div className="App">
-            <Header />
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Distribució de gens dels pacients</h2>
-
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="gen" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="count" fill="#38bdf8" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            <HeaderLogat nom={nom} />
             <div>
               <h1>Pacients de {nom}</h1>
                 {pacients.map((pacient, index) => (
                   <div key={pacient.id}>
-                    <Pacient id={pacient.id} nom={pacient.nom} cognom={pacient.cognom} codi={pacient.codi_pacient} 
-                    clinic={nom} caracteristiques={pacient.caracteristiques} malalties={pacient.malalties}
+                    <Pacient id={pacient.id} codi={pacient.codi_pacient} 
+                    clinic={nom} caracteristiques={pacient.caracteristiques} 
                     idclinic={id} gen={pacient.gen} malaltia = {pacient.malaltia} />
                   </div>
               ))}
@@ -102,27 +76,6 @@ function InicialClinic(){
               <button className="button" onClick = {() => {navigate('/');}}>HPOs
               </button>
             </div>
-            {Object.entries(pacientsGen).map(([gen, grup]) => (
-            <div key={gen} >
-              <h2>Gen: {gen} ({grup.length} pacients)</h2>
-              {grup.map((pacient) => (
-                <div key={pacient.id}>
-                  <Pacient
-                    id={pacient.id}
-                    nom={pacient.nom}
-                    cognom={pacient.cognom}
-                    codi={pacient.codi_pacient}
-                    clinic={nom}
-                    caracteristiques={pacient.caracteristiques}
-                    malalties={pacient.malalties}
-                    idclinic={id}
-                    gen={pacient.gen}
-                    malaltia={pacient.malaltia}
-                  />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+          </div>
     )
 } export default InicialClinic;

@@ -27,6 +27,7 @@ from .models import Clinic
 from .models import Pacient
 from .models import Feature
 from .models import Disease
+from .ontologia import get_obo
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +44,17 @@ def api_home(request):
 class ClinicView(viewsets.ModelViewSet):
     serializer_class = ClinicSerializer
     queryset = Clinic.objects.all()
+
+def suggerir_termes(request):
+    terme_buscat = request.GET.get('terme', '')
+    ontology = get_obo()
+    
+    resultats = [
+        {'id': terme.id, 'name': terme.name}
+        for terme in ontology.terms()
+        if terme.name.lower().startswith(terme_buscat.lower())
+    ]
+    return JsonResponse(resultats, safe=False)
 
 # Create your views here.
 @csrf_exempt
@@ -84,6 +96,21 @@ def gen_counts(request):
     print(data)
     return JsonResponse(data, safe=False)
 
+def trets_count(request):
+    print("entro a trets count")
+    idclinic = request.GET.get("idclinic")
+    print("el id del clinic és")
+    print(idclinic)
+    pacients = Pacient.objects.filter(clinic=idclinic)
+    print("els pacients són")
+    print(pacients)
+    features = []
+    for pacient in pacients:
+        features += list(pacient.caracteristiques.all().values_list('nom', flat=True))
+    count = Counter(features)
+    data = [{"feature": feature, "count": count[feature]} for feature in count]
+    return JsonResponse(data, safe=False)
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def llistar_termes(request):
@@ -110,19 +137,11 @@ def llistar_termes(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def afegir_terme(request):       
-    print("estic al post de termes")
-    print(request.data)
     coditerme = request.data.get('codiTerme')
     nomterme = request.data.get('nomTerme')
     id = request.data.get('id')
     idclinic = request.data.get('idclinic')
     clinic = request.data.get('clinic')
-    print("els termes són:")
-    print(coditerme)  ## obtinc això
-    print(nomterme) 
-    print(id)
-    print(idclinic)
-    print(clinic)
     ## [{'id': 1, 'codi': 'HP:1', 'nom': 'prova1'}, {'id': 2, 'codi': 'HP:2', 'nom': 'prova2'}]
     # Filtrar només els camps que t'interessen
     data_filtrada = {

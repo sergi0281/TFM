@@ -7,7 +7,7 @@ import Pacient from "../components/Pacient";
 import Sessio from "../components/Sessio";
 import axios from 'axios';
 import NouPacient from '../components/NouPacient';
-import Header from "../components/Header";
+import HeaderLogat from "../components/HeaderLogat";
 import Footer from "../components/Footer";
 import Termes from "../components/Termes";
 import Malalties from "../components/Malalties";
@@ -16,23 +16,22 @@ function InfoPacient(){
     const navigate = useNavigate()
     const location = useLocation()
     const id = location.state?.id; 
-    const nom = location.state?.nom; 
-    const cognom = location.state?.cognom;
     const codi = location.state?.codi;
     const clinic = location.state?.clinic;
     const idclinic = location.state?.idclinic;
     const caracteristiques = location.state?.caracteristiques;
-    const malalties = location.state?.malalties;
+    const malaltia = location.state?.malaltia;
+    const gen = location.state?.gen;
     console.log("les dades del pacient a infopacient són")
-    console.log(id)
-    console.log(nom)
-    console.log(cognom)
-    console.log("més dades")
-    console.log(codi)
-    console.log(clinic)  //arriba el nom del clínic
-    console.log(idclinic)
-    //console.log({caracteristiques})
-    console.log("fi de les dades del pacient")
+    //console.log(id)
+    //console.log(caracteristiques)
+    //console.log("més dades")
+    //console.log(codi)
+    //console.log(clinic)  //arriba el nom del clínic
+    //console.log(idclinic)
+    //console.log(malaltia)
+    //console.log(gen)
+    //console.log("fi de les dades del pacient")
     //console.log(malalties)
 
     const handleClick = (event) => {
@@ -43,8 +42,6 @@ function InfoPacient(){
         .then(() => {
             navigate('/components/Confirmacio', {
                 state: { 
-                    nom: nom,
-                    cognom: cognom,
                     clinic: clinic
                 }
             });
@@ -53,18 +50,13 @@ function InfoPacient(){
 
     return(
     <div>
-        <Header />
+        <HeaderLogat nom={clinic}/>
         <div>
-            <p> NOM PACIENT: {nom} </p>
-            <p> COGNOM PACIENT: {cognom} </p>
             <p> CODI PACIENT: {codi} </p>
         </div>
         <div className="termesmalalties">
-            <Termes nom= {nom} cognom={cognom} codi={codi} id={id} malalties={malalties} caracteristiques={caracteristiques} clinic={clinic} idclinic={idclinic} />
+            <Termes id={id} codi={codi} caracteristiques={caracteristiques} clinic={clinic} idclinic={idclinic} malaltia={malaltia} gen={gen} />
         </div>   
-        <div> 
-            <Malalties nom= {nom} cognom={cognom} codi={codi} id={id} malalties={malalties} caracteristiques={caracteristiques} clinic={clinic} idclinic={idclinic}/>
-        </div>
         <div className="botonsInfoPacient">
             <button className="button" onClick = {() => {navigate('/pages/InicialClinic',
                 {
