@@ -33,11 +33,11 @@ function Login() {
     })
     .then(response => {
       console.log(response.data);  
-      const clinic_id = response.data.user.id; 
+      const idclinic = response.data.user.id; 
       
       navigate('/pages/InicialClinic', { state: { 
                     nom: inputs.nom,
-                    id: clinic_id } });
+                    id: idclinic } });
     
     })
     .catch(error => {

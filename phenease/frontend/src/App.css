@@ -117,14 +117,59 @@ a{
   border-radius: 1px white;
   background: yellow
 }
+.termebis{
+  display:bock;
+  width: 20%;
+  float: left;
+  color: black;
+  margin: 5px;
+  border-radius: 1px;
+  border-color: white;
+  background: #EC9736
+}
 .terme1{
   display:bock;
   width: 80%;
   float: left;
+}
+.terme1bis{
+  display:bock;
+  width: 80%;
+  float: left;
+  border-radius: 1px;
+  border-color: white;
 }
 .terme2{
   display:bock;
   width: 20%;
   float: left;
   border: 1px white;
+}
+.container {
+  display: flex;
+  gap: 20px; /* espai entre divs */
+}
+
+.prova1, .prova2 {
+  width: 40%;
+  border-width: 2px;
+  border-style: solid;
+}
+.pacientGen{
+  width: 40%;
+  margin: 4px;
+  display: flex;
+  float:left;
+  border-width: 2px;
+  border-style: solid;
+  color: white;
+  background-color: #EC9736;
+}
+.prova4{
+  width: 50%;
+  margin-top: 10px;
+  margin-left:auto; 
+  margin-right: auto;
+  border-width: 2px;
+  border-style: solid;
 }

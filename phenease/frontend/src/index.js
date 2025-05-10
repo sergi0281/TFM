@@ -5,14 +5,14 @@ import App from './App';
 import Login from "./pages/Login"; 
 import Register from "./pages/Register";  
 //import RegisterOK from "./components/RegisterOK";  
-//import InfoPacient from "./pages/InfoPacient";  
+import InfoPacient from "./pages/InfoPacient";  
 import InicialClinic from "./pages/InicialClinic";
 import reportWebVitals from './reportWebVitals';
 //import NouPacient from './components/NouPacient';
 //import ConfirmacioDelPac from './components/ConfirmacioDelPac';
 //import Malalties from './components/Malalties';
 //import Termes from './components/Termes'
-//import NouTerme from './components/NouTerme';
+import NouTerme from './components/NouTerme';
 //import NovaDisease from './components/NovaDisease';
 //import GenPredit from './components/GenPredit';
 
@@ -27,7 +27,8 @@ root.render(
       <Route path="/pages/Login" element={<Login />} />
       <Route path="/pages/Register" element={<Register />} />
       <Route path="/pages/InicialClinic" element={<InicialClinic />} />
-      
+      <Route path="/pages/InfoPacient" element={<InfoPacient />} />
+      <Route path="/components/NouTerme" element={<NouTerme />} />
     </Routes>
   </BrowserRouter>
   //</React.StrictMode>

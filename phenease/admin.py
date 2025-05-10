@@ -9,10 +9,8 @@ class PacientAdmin(admin.ModelAdmin):
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 admin.site.register(Clinic)
-#admin.site.register(Pacient)
 admin.site.register(Feature)
 admin.site.register(Disease)
 admin.site.register(Pacient,PacientAdmin)
 
-#admin.site.register(Log)
 

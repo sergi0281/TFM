@@ -25,6 +25,9 @@ function InicialClinic(){
   console.log(nom)
   console.log(id)
   
+  //<GraficaBarres idclinic={id} pacients={pacients} />
+  //<TretsComuns idclinic={id} pacients={pacients} />
+  //<PacientsPerGen idclinic={id} pacients={pacients}/>
   const [pacients, setPacients] = useState([]);
   
   useEffect(() => {
@@ -35,7 +38,7 @@ function InicialClinic(){
       },
       {
         headers: {
-            'Content-Type': 'application/json',  // Indicar que és JSON
+            'Content-Type': 'application/json',  
             //'Authorization': 'Bearer' 
         }
       })
@@ -52,6 +55,8 @@ function InicialClinic(){
     return(
         <div className="App">
             <HeaderLogat nom={nom} />
+            <GraficaBarres idclinic={id} pacients={pacients} />
+            <TretsComuns idclinic={id} pacients={pacients} />
             <div>
               <h1>Pacients de {nom}</h1>
                 {pacients.map((pacient, index) => (
