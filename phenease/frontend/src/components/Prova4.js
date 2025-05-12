@@ -7,11 +7,28 @@ import { ComposedChart,XAxis,YAxis,Tooltip,ResponsiveContainer,Customized } from
     //</div>
 
 function Prova4(props){ 
+  console.log("el tretsPacient i el TretsGen són així")
+  //console.log(props.tretsPacient)
+  //console.log(props.tretsGen)
    // Comptem els pacients que tenen cada tret
   const data = props.tretsGen.map((tret) => {
     let count = 0;
+    //Object.values(props.tretsPacient).forEach((pacient) => {
+    //  console.log('Tret:', tret, '| Pacient té el tret?', pacient[tret]);
+    //  if (pacient[tret]) count++;
+    //});
+    //return { tret, count };
     Object.values(props.tretsPacient).forEach((pacient) => {
-      if (pacient[tret]) count++;
+      //if (pacient.caracteristiques) {
+      //  console.log('Tret actual:', tret);
+      //  console.log('Característiques del pacient:', pacient.caracteristiques);
+      //  pacient.caracteristiques.forEach((carac) => {
+      //    console.log('Comparant:', carac, '===', tret, '?', carac === tret);
+      //  });
+      //}
+      if (pacient.caracteristiques && pacient.caracteristiques.some((carac) => carac.codi === tret)) {
+        count++;
+      }
     });
     return { tret, count };
   });
@@ -31,6 +48,7 @@ function Prova4(props){
     //i definim el color
     const color = `rgb(255, ${255 - intensity}, ${255 - intensity})`;
     // la g representa un grup d'elements; conté rect i text
+    //console.log('DATA PER AL HEATMAP:', data);
     return (
       <g>
         <rect
@@ -40,7 +58,11 @@ function Prova4(props){
           height={cellHeight}
           fill={color}
           stroke="#ccc"
-        />
+          >
+          <title>
+            {`${payload.tret}: ${payload.count} pacients`}
+          </title>
+        </rect>
         <text
           x={x + 5}
           y={y + cellHeight / 2 + 5}
@@ -59,11 +81,11 @@ function Prova4(props){
         Heatmap de trets afectats pel gen: {props.gen}
       </h2>
 
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height={data.length * 35}>
         <ComposedChart
           layout="vertical"
           data={data}
-          margin={{ top: 20, right: 20, bottom: 20, left: 100 }}
+          margin={{ top: 20, right: 50, bottom: 20, left: 100 }}
         >
           <XAxis type="number" hide />
           <YAxis
@@ -82,7 +104,7 @@ function Prova4(props){
                   <Heatmap
                     key={entry.tret}
                     height={height}
-                    width={width - 100}
+                    width={width - 150}
                     x={100}
                     y={index * 30}
                     payload={entry}

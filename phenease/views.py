@@ -27,7 +27,8 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework import viewsets
 from collections import Counter
-#from .ontologia import get_obo
+from .ontologia import get_obo
+from .ontologia import carregar_ontologia
 
 logger = logging.getLogger(__name__)
 
@@ -257,3 +258,16 @@ def gens_count(request):
     #print(data)
     return JsonResponse(data, safe=False)
 
+def ontologia(request):
+    print("entro a carregar la ontologia")
+    ontologia = get_obo()
+
+    termes = [
+        {
+            'id': terme.id,
+            'nom': terme.name,
+        }
+        for terme in ontologia.terms()
+    ]
+
+    return JsonResponse(termes, safe=False)

@@ -17,10 +17,11 @@ import NouTerme from './components/NouTerme';
 //import GenPredit from './components/GenPredit';
 
 import { BrowserRouter, Routes, Route }  from "react-router-dom";
-
+import { OntologiaProvider } from './OntologiaContext';   
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+   <OntologiaProvider>
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
@@ -31,6 +32,7 @@ root.render(
       <Route path="/components/NouTerme" element={<NouTerme />} />
     </Routes>
   </BrowserRouter>
+  </OntologiaProvider>
   //</React.StrictMode>
 
 );

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 //import logo from "../logos/logo.png";
 //import carpetanegra from "../logos/carpetanegra.png";
 //import usuari from "../logos/usuari.png";
-//import Pacient from "../components/Pacient";
+import Pacient from "../components/Pacient";
 //import Logo from "../components/Logo";
 //import Sessio from "../components/Sessio";
 import GraficaBarres from "../components/GraficaBarres";
@@ -69,7 +69,11 @@ function InicialClinic(){
               {pacients.map((pacient, index) => (
                   <div key={pacient.id}>
                     <p>{pacient.codi_pacient}  {pacient.gen}  {pacient.malaltia}</p>
+                    <Pacient id={pacient.id} codi={pacient.codi_pacient} 
+                    clinic={nom} caracteristiques={pacient.caracteristiques} 
+                    idclinic={id} gen={pacient.gen} malaltia = {pacient.malaltia} />
                   </div>
+                  
               ))}
             </div>
             <div>

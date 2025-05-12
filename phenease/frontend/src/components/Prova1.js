@@ -5,7 +5,7 @@ function Prova1(props){
     <div>
         <div><strong>Pacinets amb el gen {props.gen} alterat:</strong></div>
         {props.pacients.map((pacient) => (
-          <div class="pacientGen" key={pacient.id}>
+          <div className="pacientGen" key={pacient.id}>
             <p>{pacient.codi_pacient}  {pacient.sexe} </p>
           </div>
         ))}

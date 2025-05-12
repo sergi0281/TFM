@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 function Termes(props){ 
     const [features, setFeatures] = useState([]);
-    const location = useLocation();
     const navigate = useNavigate();
     const id = props.id;
     const codi = props.codi;
@@ -14,10 +13,10 @@ function Termes(props){
     const idclinic = props.idclinic;
     const gen = props.gen;
     const malaltia = props.malaltia;
-    console.log("entrem a termes i anem a operar mostrant nom i id del clínic");
+    //console.log("entrem a termes i anem a operar mostrant nom i id del clínic");
     //console.log(id);  //id del pacient
-    console.log(clinic) //nom de clínic
-    console.log(idclinic) //id de clínic
+    //console.log(clinic) //nom de clínic
+    //console.log(idclinic) //id de clínic
     //console.log(caracteristiques);
 
     //quan s'inicia aquest component es llisten tots els temes que té el pacient concret
@@ -35,9 +34,9 @@ function Termes(props){
             }
           })
           .then(response => {
-            console.log("termes rebuts: ", response.data);
+            //console.log("termes rebuts: ", response.data);
             setFeatures(response.data);
-            console.log(response.data);
+            //console.log(response.data);
           })
           .catch(error => {
             console.error('Error obtenint termes:', error);
@@ -51,9 +50,24 @@ function Termes(props){
                 data: { id, idterme, clinic, idclinic },
                 headers: { 'Content-Type': 'application/json' }})
             .then(() => {
-                //navigate('/components/Confirmacio', {
-                console.log("terme eliminat: ");
-            });
+                console.log("terme eliminat: "); 
+                //està eliminant el terme però no navega fins a InfoPacient  
+                navigate('/pages/InfoPacient', { 
+                state: { 
+                    clinic: clinic,
+                    id: id,
+                    idclinic: idclinic,
+                    gen: gen,
+                    caracteristiques: caracteristiques,
+                    malaltia: malaltia
+                } });
+                  
+            })
+            //.then(() => {
+            //    console.log("terme eliminat: ");
+            //    //navigate('/components/Confirmacio', {
+                
+            //});
         }
         
     return(
@@ -94,7 +108,7 @@ function Termes(props){
                             caracteristiques: caracteristiques,
                             codi: codi,
                             gen: gen,
-                            malaltia: malaltia
+                            malaltia: malaltia,
                         }
                     }
                     );}}>
@@ -108,6 +122,8 @@ function Termes(props){
                             id: id,
                             caracteristiques: caracteristiques,
                             codi: codi,
+                            gen: gen,
+                            malaltia: malaltia,
                         }
                     }
                     );}}>

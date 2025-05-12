@@ -16,8 +16,6 @@ function InfoPacient(){
     const caracteristiques = location.state?.caracteristiques;
     const malaltia = location.state?.malaltia;
     const gen = location.state?.gen;
-    console.log("a info pacient tenim el següent idclinic")
-    console.log(idclinic)
     
     const handleClick = (event) => {
         event.preventDefault();
@@ -25,9 +23,10 @@ function InfoPacient(){
             data: { id },
             headers: { 'Content-Type': 'application/json' }})
         .then(() => {
-            navigate('/components/Confirmacio', {
+            navigate('/pages/InicialClinic', {
                 state: { 
-                    clinic: clinic
+                    clinic: clinic,
+                    idclinic: idclinic,
                 }
             });
         });

@@ -4,8 +4,6 @@ import carpetanegra from "../logos/carpetanegra.png";
 import usuari from "../logos/usuari.png";
 
 function Pacient(props){
-    console.log("a pacient el id del clinic és el següent")
-    console.log(props.idclinic)
     const navigate = useNavigate()
     return (
         <div className="pacientCarpeta">
@@ -28,7 +26,7 @@ function Pacient(props){
                         }
                     }
                     );}}>
-                Més informació del pacient
+                Més info
             </button>    
         </div>
     )
