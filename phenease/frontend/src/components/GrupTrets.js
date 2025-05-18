@@ -1,5 +1,5 @@
 
-function Prova2(props){ 
+function GrupTrets(props){ 
     //console.log(props.trets)
     return (
         <div>
@@ -14,4 +14,4 @@ function Prova2(props){
         </div>
       );
 }
-export default Prova2;
+export default GrupTrets;

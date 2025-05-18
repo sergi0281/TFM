@@ -1,7 +1,7 @@
 //import Pacient from "../components/Pacient";
-import Prova1 from "../components/Prova1";
-import Prova2 from "../components/Prova2";
-import Prova4 from "../components/Prova4";
+import GrupPacients from "./GrupPacients";
+import GrupTrets from "./GrupTrets";
+import Heatmap from "./Heatmap";
 
 
 function PacientsPerGen(props){ 
@@ -72,8 +72,6 @@ function PacientsPerGen(props){
             ...pacient,
             trets: Array.isArray(pacient.cafracteristiques) ? [...pacient.caracteristiques] : []
           };
-          console.log("trets pacients funciona ok")
-          console.log("imprimeixo el TretsPacient")
           console.log(TretsPacient)
 
         });
@@ -94,15 +92,15 @@ function PacientsPerGen(props){
           <h2>Gen: {gen} ({grup.pacients?.length || 0} pacients)</h2>
           <div className="container">
             <div className="prova1">
-            <Prova1 pacients={grup.pacients} gen={gen} />
+            <GrupPacients pacients={grup.pacients} gen={gen} nomclinic={nom} idclinic={idclinic} />
             </div>
             <div className="prova2">
-            <Prova2 trets={grup.trets} gen={gen} />
+            <GrupTrets trets={grup.trets} gen={gen} />
             </div>
           </div>
           <div className="container2">
             <div className="prova4">
-            <Prova4 gen={gen} tretsPacient={TretsPacient} tretsGen={grup.trets}/>
+            <Heatmap gen={gen} tretsPacient={TretsPacient} tretsGen={grup.trets}/>
             </div>
           </div>
         </div>

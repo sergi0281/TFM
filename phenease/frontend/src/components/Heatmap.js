@@ -6,7 +6,7 @@ import { ComposedChart,XAxis,YAxis,Tooltip,ResponsiveContainer,Customized } from
     //    <p>{props.paraula}</p>
     //</div>
 
-function Prova4(props){ 
+function Heatmap(props){ 
   console.log("el tretsPacient i el TretsGen són així")
   //console.log(props.tretsPacient)
   //console.log(props.tretsGen)
@@ -119,4 +119,4 @@ function Prova4(props){
     </div>
   );
 };
-export default Prova4;
+export default Heatmap;

@@ -75,16 +75,9 @@ function Termes(props){
     return(
     <div className="termes">
         <div>
-            <header >
-                <div className="App-header">
-                    <p> Termes fenotípics del pacient: </p>
-                </div>
-            </header>
-        </div>
-        <div>
             <main >
                 <div className="caracteristiques">
-                    <p><b>Característiques:</b></p>
+                    <p><b>Termes fenotípics del pacient:</b></p>
                         {caracteristiques.map((carac, index) => (
                             <div className="terme">
                                 <div className="terme1">

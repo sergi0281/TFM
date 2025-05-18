@@ -6,13 +6,7 @@ import usuari from "../logos/usuari.png";
 function Pacient(props){
     const navigate = useNavigate()
     return (
-        <div className="pacientCarpeta">
-            <div className="componentPacientimg"><img src={usuari} className="App-user" alt="user" /></div>
-            <div className="componentPacient"><p><b>CODI PACIENT:</b>{props.codi}</p></div>
-            <div className="componentPacient"><p><b>GEN:</b>{props.gen}</p></div>
-            <div className="componentPacient"><p><b>MALALTIA:</b>{props.malaltia}</p></div>
-            <div className="componentPacientimg"><img src={carpetanegra} className="App-user" alt="user" /></div>
-            
+        <div>
             <button className="button" onClick = {() => {navigate('/pages/InfoPacient'
                     ,{
                         state: {
@@ -26,8 +20,11 @@ function Pacient(props){
                         }
                     }
                     );}}>
-                Més info
-            </button>    
+                +
+            </button>
+            <b> PACIENT:  </b>{props.codi} 
+            <b>    GEN:  </b>{props.gen} 
+            <b>    MALALTIA:  </b>{props.malaltia}
         </div>
     )
 }

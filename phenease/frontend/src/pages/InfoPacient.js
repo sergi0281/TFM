@@ -16,6 +16,9 @@ function InfoPacient(){
     const caracteristiques = location.state?.caracteristiques;
     const malaltia = location.state?.malaltia;
     const gen = location.state?.gen;
+    console.log("clinic i id clinic quan entro a infopacient són")
+    console.log(clinic)
+    console.log(idclinic)
     
     const handleClick = (event) => {
         event.preventDefault();
@@ -36,10 +39,9 @@ function InfoPacient(){
     <div>
         <HeaderLogat nom={clinic}/>
         <div>
-            <p> CODI PACIENT: {codi} </p>
+            <p className="caracteristiques"> <b> CODI PACIENT: {codi} </b></p>
         </div>
         <div className="termesmalalties">
-            <p>{id}  {codi}  {clinic}  {idclinic}  {gen}  {malaltia}</p>  
             <Termes id={id} codi={codi} caracteristiques={caracteristiques} clinic={clinic} idclinic={idclinic} malaltia={malaltia} gen={gen} />  
         </div>   
         <div className="botonsInfoPacient">
@@ -56,7 +58,6 @@ function InfoPacient(){
                 Eliminar pacient    
             </button>
         </div>
-        <Footer />
     </div>
     )
 } export default InfoPacient;

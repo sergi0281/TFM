@@ -1,9 +1,9 @@
 
-function Prova1(props){ 
+function GrupPacients(props){ 
     //console.log(props.pacients)
     return(
     <div>
-        <div><strong>Pacinets amb el gen {props.gen} alterat:</strong></div>
+        <div><strong>Pacients amb el gen {props.gen} alterat:</strong></div>
         {props.pacients.map((pacient) => (
           <div className="pacientGen" key={pacient.id}>
             <p>{pacient.codi_pacient}  {pacient.sexe} </p>
@@ -12,4 +12,4 @@ function Prova1(props){
       </div>
     )
 }
-export default Prova1;
+export default GrupPacients;

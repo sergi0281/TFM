@@ -60,18 +60,17 @@ function InicialClinic(){
         <div className="App">
             <HeaderLogat nom={nom} />
             <div>
-              <p> ets el clinic {nom} amb el id {id}</p>
-              <p> la teva gràfica de pacients és</p>
               <GraficaBarres idclinic={id} pacients={pacients} />
             </div>
             <div>
-              <h1> Pacients de {nom} agrupats per gen </h1>
+              <h2> Pacients de {nom} </h2>
               {pacients.map((pacient, index) => (
                   <div key={pacient.id}>
-                    <p>{pacient.codi_pacient}  {pacient.gen}  {pacient.malaltia}</p>
+                    <p>
                     <Pacient id={pacient.id} codi={pacient.codi_pacient} 
                     clinic={nom} caracteristiques={pacient.caracteristiques} 
                     idclinic={id} gen={pacient.gen} malaltia = {pacient.malaltia} />
+                    </p>
                   </div>
                   
               ))}
