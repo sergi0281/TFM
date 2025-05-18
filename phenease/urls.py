@@ -4,7 +4,7 @@ from rest_framework import routers
 #from .views import pacients, login_clinics,clinics,pagina,accio_pacient,llistar_termes,afegir_terme
 #from .views import eliminar_terme,accio_malaltia,predir_gen,home,gen_counts,trets_count
 from .views import home,clinics,login_clinics,accio_pacient,pacients,llistar_termes,afegir_terme
-from .views import eliminar_terme,gens_count,ontologia
+from .views import eliminar_terme,gens_count,ontologia,predir_gen
 
 urlpatterns = [
     path('', home, name='home'),
@@ -17,7 +17,7 @@ urlpatterns = [
     path('api/eliminar_terme/',eliminar_terme,name='eliminar_terme'),
     path('api/ontologia/', ontologia, name='ontologia'),
     #path('api/malalties/',accio_malaltia,name='accio_malaltia'),
-    #path('api/predir_gen/', predir_gen, name='predir_gen'),
+    path('api/predir_gen/', predir_gen, name='predir_gen'),
     path('api/gens_count/', gens_count, name='gens_count'),
     #path('api/trets_count/', trets_count, name='trets_count'),
 ]

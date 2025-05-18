@@ -51,6 +51,8 @@ function Termes(props){
                 headers: { 'Content-Type': 'application/json' }})
             .then(() => {
                 console.log("terme eliminat: "); 
+                const novesCaracteristiques = caracteristiques.filter(c => c.id !== idterme);
+                setFeatures(novesCaracteristiques);
                 //està eliminant el terme però no navega fins a InfoPacient  
                 navigate('/pages/InfoPacient', { 
                 state: { 
@@ -58,7 +60,7 @@ function Termes(props){
                     id: id,
                     idclinic: idclinic,
                     gen: gen,
-                    caracteristiques: caracteristiques,
+                    caracteristiques: novesCaracteristiques,
                     malaltia: malaltia
                 } });
                   

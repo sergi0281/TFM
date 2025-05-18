@@ -10,7 +10,7 @@ from django.contrib.auth.hashers import check_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
-#from .peticio_ollama import query_ollama
+from .peticio_ollama import query_ollama
 
 from .serializer import ClinicSerializer
 from .serializer import PacientSerializer
@@ -28,7 +28,7 @@ from rest_framework import status
 from rest_framework import viewsets
 from collections import Counter
 from .ontologia import get_obo
-from .ontologia import carregar_ontologia
+#from .ontologia import carregar_ontologia
 
 logger = logging.getLogger(__name__)
 
@@ -185,11 +185,19 @@ def afegir_terme(request):
     print("la request és:")
     print(request.data)
     
-    coditerme = request.data.get('codiTerme')
+    codiTerme = request.data.get('codiTerme')
+    #print("el codi del terme que volem afegir és:")
+    #print(coditerme)
     nomterme = request.data.get('nomTerme')
+    #print("el nom del terme que volem afegir és:")
+    #print(nomterme)
     id = request.data.get('id')
     idclinic = request.data.get('idclinic')
     clinic = request.data.get('clinic')
+    #print("els altres valors són: idpacient, idclinic, nomclinic")
+    #print(id)
+    #print(idclinic)
+    #print(clinic)
     ## [{'id': 1, 'codi': 'HP:1', 'nom': 'prova1'}, {'id': 2, 'codi': 'HP:2', 'nom': 'prova2'}]
     # Filtrar només els camps que t'interessen
     data_filtrada = {
@@ -199,7 +207,7 @@ def afegir_terme(request):
     print("la dada filtrada és:")
     print(data_filtrada)
         
-    if Feature.objects.filter(codi=coditerme).exists():
+    if Feature.objects.filter(codi=codiTerme).exists():
         print("Ja existeix")
     else:
         print("No existeix")
@@ -212,15 +220,29 @@ def afegir_terme(request):
             logger.error(f"Invalid data: {serializer.errors}")
             return Response(serializer.errors, status=400)
 
-    pacient = Pacient.objects.get(id=id)  
-    feature = Feature.objects.get(codi=coditerme) 
+    try:
+        pacient = Pacient.objects.get(id=id)  
+        feature = Feature.objects.get(codi=codiTerme)
+        print("el feature és:")
+        print(feature)
+        print("el pacient és:")
+        print(pacient)
         
-    print("afegim el feature al pacient")
-    pacient.caracteristiques.add(feature)
+        print("afegim el feature al pacient")
+        pacient.caracteristiques.add(feature)
 
-    serializer = PacientSerializer(pacient)  
-    return Response(serializer.data, status=201)
-
+        serializer = PacientSerializer(pacient) 
+        #if serializer.is_valid():
+        #    serializer.save()
+        print(serializer.data) 
+        return Response(serializer.data, status=201)
+    except Pacient.DoesNotExist:
+        return Response({'error': 'Pacient no trobat'}, status=404)
+    except Feature.DoesNotExist:
+        return Response({'error': 'Feature no trobat'}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+    
 @api_view(['DELETE'])
 @permission_classes([AllowAny])
 def eliminar_terme(request):
@@ -269,5 +291,53 @@ def ontologia(request):
         }
         for terme in ontologia.terms()
     ]
+    print("nombre de termes que tinc a la ontologia")
+    print(len(termes))
 
     return JsonResponse(termes, safe=False)
+
+# Create your views here.
+@csrf_exempt
+def predir_gen(request):
+    print("entro a predir gen")
+    if request.method == 'POST':
+        print(request)
+        #print(request.body)
+        body = json.loads(request.body)
+        #caracteristiques = body.get('caracteristiques', '')
+
+        #prompt = f"Predicció del gen amb HPO {caracteristiques}?"
+        #caracteristiques = body.get('caracteristiques', [])
+        caracteristiques = body.get('caracteristiques', '')
+        print("caracteristiques rebudes:", caracteristiques)
+        noms = [element['nom'] for element in caracteristiques]
+
+        print(noms)
+        
+        # Assegura't que sigui string
+        #caracteristiques_str = ', '.join(caracteristiques)
+
+        #prompt = f"Predicció del gen amb els següents trets HPO: {caracteristiques_str}. Quin gen és el més probable?"
+        #prompt = f"Dona l'identificador d'un sol gen (només un, per exemple GJB2) donades les següents característiques {caracteristiques} Retorna només una paraula, l'identificador del gen"
+        #prompt="list 5 cities from arrounde the world and their countries"
+        #prompt=f"list in json format 5 NCBIgen symbol that can be mutated according to these features {noms}"
+        prompt=prompt = f"""
+                    According to these features: {noms},
+                    list only 5 NCBIgen only in json format without more explanations as follows:
+                    - "nameGene": name of the gen in ncbi.
+                    - "idGene": id of the gene in ncbi.
+
+                    Example:
+                    {{
+                    "nameGene": "NCBI_GENE_ID1",
+                    "idGene": "GEN1"
+                    }}.
+                    """
+
+
+        resposta = query_ollama(prompt,"mistral")
+        #print(json.loads(resposta)['response'])
+        print(resposta)
+        #print("la resposta és:")
+        return JsonResponse({'resposta': resposta})
+    return JsonResponse({'error': 'Només s’accepten peticions POST'}, status=405)

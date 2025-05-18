@@ -9,209 +9,127 @@ function NouTerme() {
     const navigate = useNavigate();
     const location = useLocation();
     const { idclinic, clinic, id, codi, caracteristiques, gen, malaltia } = location.state || {};
-    //console.log("les dades a nou terme és idclinic,nomclinic,idpacient:")
-    //console.log(id)
-    //console.log(idclinic) 
-    //console.log(clinic)
-    //console.log(codi)
-    //console.log(gen)
-    //console.log(malaltia)
-    //console.log(caracteristiques)
-    
     const { ontologia, loading } = useContext(OntologiaContext);  // Obtenim l'ontologia del context
 
-    // Si l'ontologia encara s'està carregant, mostrem un missatge
-    
-    //aquí comencem a posar les comandes per fer suggeriments
-    //const [termes, setTermes] = useState([]);
-    //const [ontologia, setOntologia] = useState([]);
-    //const [loading, setLoading] = useState(true);
     const [inputValue, setInputValue] = useState('');
     const [codiTerme, setCodiTerme] = useState('');
     const [suggeriments, setSuggeriments] = useState([]);
-    //const [codiTerme, setCodiTerme] = useState('');
     const [nomTerme, setNomTerme] = useState('');
     
     if (loading) {
       return <p>Carregant ontologia...</p>;
     }
     
-    //el primer que es fa quan s'inicia el component NouTerme és carregar la ontologia
-    //useEffect(() => {
-      //axios.get('/api/termes/')
-      //  .then(res => {
-      //    setOntologia(res.data);
-      //  })
-      //  .catch(err => {
-      //    console.error('Error carregant la ontologia:', err);
-      //  });
-      //console.log("vaig a carregar la ontologia desde nouterme")
-      //const carregarOntologia = async () => {
-      //  try {
-      //    const res = await axios.get('/api/ontologia/');
-      //    setOntologia(res.data);
-      //  } catch (err) {
-      // console.error('Error carregant la ontologia:', err);
-      //  } finally {
-      //    setLoading(false);
-      //  }
-      //};
-  
-      //carregarOntologia();  
-    //}, []);
     const primerTerme = ontologia[0];
-    const segonTerme = ontologia[1];
-    //console.log(primerTerme)
-    //console.log(segonTerme)
-
-    // Parser de fitxers .obo
-    const parseOBO = (text) => {
-      const blocks = text.split(/\n\[Term\]/g).map((b, i) => (i === 0 ? b : '[Term]' + b)).filter(Boolean);
-      return blocks.map((block) => {
-        const term = {};
-        const lines = block.split('\n').map(line => line.trim()).filter(line => line && !line.startsWith('['));
-        lines.forEach(line => {
-          const match = line.match(/^(\w+):\s+(.*)$/);
-          if (match) {
-            const [, key, rawValue] = match;
-            const value = rawValue.trim();
-            if (!term[key]) term[key] = value;
-            else if (Array.isArray(term[key])) term[key].push(value);
-            else term[key] = [term[key], value];
-          }
-        });
-        return term;
-      });
-    };
-
-    // Quan escrius al camp, busquem suggeriments
-    //const handleInputChange = (e) => {
-    //  const value = e.target.value;
-    //  setInputValue(value);
-    //  setNomTerme(value);
-
-    //  if (value.length >= 2) {
-    //    const resultats = termes.filter(term =>
-    //      term.name && term.name.toLowerCase().includes(value.toLowerCase())
-    //    );
-    //    setSuggeriments(resultats);
-    //  } else {
-    //    setSuggeriments([]);
-    //  }
-    //};
-
+    const segonTerme = ontologia[19480];
+    
     const handleInputChange = (e) => {
-      //if (!ontologia || loading || !inputValue) {
-      //  setSuggeriments([]);
-      //  return;
-      //}
       const value = e.target.value;
       setInputValue(value);
     
-      //console.log("entro al handle InputChange")
-      //console.log(inputValue)
+      console.log("entro al handle InputChange")
+      console.log(value)
       //console.log(term)
-      if (inputValue.length >= 2) {
+      if (value.length >= 2) {
         const filtered = ontologia
-            .filter((term) =>
-            //console.log(term)
-            term.nom.toLowerCase().includes(inputValue.toLowerCase())
+            .filter((term) => {
+              const termName = term.nom.toLowerCase().trim();
+              const inputValue = value.toLowerCase().trim();
+              console.log(`Buscant "${inputValue}" dins "${termName}"`);
+              //console.log(term)
+              term.nom.toLowerCase().includes(value.toLowerCase())
+            }
             )
             .slice(0, 10)
             .map((term) => ({
               id: term.id,
               nom: term.nom,
             }));
+        
         setSuggeriments(filtered);
+      }
+
+      const selectedTerm = ontologia.find(
+        (term) => term.nom.toLowerCase() === value.toLowerCase()
+      );
+
+      if (selectedTerm) {
+        handleSelect(selectedTerm.nom);
       }
     };
 
     const handleSelect = (nom) => {
-      console.log(nom)
-      const termeSeleccionat = suggeriments.find(t => t.nom === nom);
-      console.log(termeSeleccionat)
       setInputValue(nom);
-      setNomTerme(nom);
-      setCodiTerme(termeSeleccionat?.id || '');
-      setSuggeriments([]);
+      const selected = ontologia.find((term) => term.nom === nom);
+      if (selected) {
+        setCodiTerme(selected.id);
+        setNomTerme(selected.nom)
+        console.log("Seleccionat:", selected);
+      }
     };
-    //const handleSelect = (term) => {
-    //  setInputNom(term.nom);       // Mostra nom seleccionat al camp
-    //  setInputCodi(term.codi);     // Actualitza l'altre camp
-    //  setSuggeriments([]);         // Tanca suggeriments
-    //};
-  
-    //const handleSubmitback = (e) => {
-    //  e.preventDefault();
-    //  console.log('Codi:', e.target.codi.value);
-    //  console.log('Nom:', inputValue);
-    //};
-  
-    //const [inputs, setInputs] = useState({
-    //    nom:"",
-    //    codi:"",
-    //  });
-    //const [mostrar, setMostrar] = useState(false);
-    //const handleChange = (event) => {
-    //  const name = event.target.name;
-    //  const value = event.target.value;
-    //  setInputs(values => ({...values, [name]: value}))
-    //}
-   
+
     const handleSubmit = (event) => {
       event.preventDefault();
       console.log("codiTerme:", codiTerme);
       console.log("nomTerme:", nomTerme);
-    }  //he de treure aquesta clau, activar el blog de l'axios per afegir el terme
-       // i tancar-lo abans del response  
+      //he de treure aquesta clau, activar el blog de l'axios per afegir el terme
+      // i tancar-lo abans del response  
 
-    //  axios.post('http://localhost:8000/api/afegir_terme/', {
-    //      codiTerme: codiTerme,
-    //      nomTerme: nomTerme,
-    //      clinic: clinic,
-    //      idclinic: idclinic,
-    //      id: id,
-    //  },
-    //  {
-    //    headers: {
-    //        'Content-Type': 'application/json'  // Indicar que és JSON
-    //    }
-    //  },
-    //  )
-    //  .then(response => {
-    //  console.log("inicio la resposta de afegri terme");
-      //const idclinicr=response.data.idclinic;
-    // console.log(idclinic)
-    //  const idr = response.data.id;
-    //  const codir = response.data.codi_pacient;
-    //  const caracteristiquesr = response.data.caracteristiques;
-    //  const nom_clinic = response.data.nom_clinic;
-    //  console.log("el id clinic quan torno de afegir terme es")
-    //  console.log(idclinic)
-    //  console.log(idr)
-    //  console.log(codir)
-    //  console.log(caracteristiquesr)
-    //  console.log(nom_clinic)
-    //  console.log("fi de les dades de quan torno d'afegir terme")
-    //  if (caracteristiques) {
-    //   navigate('/pages/InfoPacient', 
-    //      { state: { 
-    //        idclinic: idclinic,
-    //        clinic: nom_clinic,
-    //        id: idr,
-    //        codi: codir,
-    //        caracteristiques: caracteristiquesr,
-    //        } 
-    //      });
-    //  } else {
-    //    console.warn("Algunes dades falten, assegura't que totes les variables es carreguen correctament!");
-    //  }
-        
-    //  })
-    //  .catch(error => {
-    //    console.error('Error obtenint usuari:', error);
-    //  });
-    //}
+        axios.post('http://localhost:8000/api/afegir_terme/', {
+            codiTerme: codiTerme,
+            nomTerme: nomTerme,
+            clinic: clinic,
+            idclinic: idclinic,
+            id: id,
+            codi: codi,
+            gen: gen,
+            malaltia: malaltia,
+        },
+        {
+            headers: {
+              'Content-Type': 'application/json'  // Indicar que és JSON
+          }
+        },
+      ) //aquí es tanca el axios post
+      // la resposta que ens arriba conté el pacient serialitzat
+      .then(response => {
+        console.log(response.data)
+        console.log("inicio la resposta de afegri terme");
+        const caracteristiquesr = response.data.caracteristiques;
+        const idclinicr=response.data.clinic;
+        const idr = response.data.id;
+        const codir = response.data.codi_pacient;
+        const nom_clinicr = response.data.nom_clinic;
+        const genr = response.data.gen;
+        const malaltiar = response.data.malaltia;
+        console.log("el id clinic quan torno de afegir terme es")
+        console.log(idclinicr)
+        console.log(idr)
+        console.log(codir)
+        console.log(caracteristiquesr)
+        console.log(nom_clinicr)
+        console.log("fi de les dades de quan torno d'afegir terme")
+        if (caracteristiques) {
+           navigate('/pages/InfoPacient', 
+              { state: { 
+                idclinic: idclinicr,
+                clinic: nom_clinicr,
+                id: idr,
+                codi: codir,
+                caracteristiques: caracteristiquesr,
+                gen: genr,
+                malaltia: malaltiar,
+              } 
+            });
+        } else {
+            console.warn("Algunes dades falten, assegura't que totes les variables es carreguen correctament!");
+        }
+          
+      }) //aquí es tanca el then
+      .catch(error => {
+          console.error('Error obtenint usuari:', error);
+      });
+    }
     return (
       <div className="App">
         <Header />
@@ -233,21 +151,14 @@ function NouTerme() {
             <label>Nom del Terme:</label>
             <div>
               <input type="text" id="nomTerme" 
-                name="nom" value={inputValue} onChange={handleInputChange}
+                name="nom" value={inputValue} onChange={handleInputChange} list="suggerimentList"
               />
+              <datalist id="suggerimentsList">
+                {suggeriments.map((term, idx) => (
+                  <option key={idx} value={term.nom} />
+                ))}
+              </datalist>
               
-              {suggeriments.length > 0 && (
-                <ul className="ulTermes">
-                  {suggeriments.map((term, idx) => (
-                    <li className="liTermes"
-                      key={idx}
-                      onClick={() => handleSelect(term.nom)}
-                    >
-                    {term.nom}
-                    </li>
-                  ))}
-                </ul>  
-              )}
             </div>
             <button className="button" type="submit">Nou</button>
               <br/>

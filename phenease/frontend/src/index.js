@@ -14,7 +14,7 @@ import reportWebVitals from './reportWebVitals';
 //import Termes from './components/Termes'
 import NouTerme from './components/NouTerme';
 //import NovaDisease from './components/NovaDisease';
-//import GenPredit from './components/GenPredit';
+import GenPredit from './components/GenPredit';
 
 import { BrowserRouter, Routes, Route }  from "react-router-dom";
 import { OntologiaProvider } from './OntologiaContext';   
@@ -30,6 +30,7 @@ root.render(
       <Route path="/pages/InicialClinic" element={<InicialClinic />} />
       <Route path="/pages/InfoPacient" element={<InfoPacient />} />
       <Route path="/components/NouTerme" element={<NouTerme />} />
+      <Route path="/components/GenPredit" element={<GenPredit />} />
     </Routes>
   </BrowserRouter>
   </OntologiaProvider>

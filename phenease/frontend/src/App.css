@@ -173,24 +173,3 @@ a{
   border-width: 2px;
   border-style: solid;
 }
-
-.ulTermes{
-  position: 'absolute';
-  top: '100%';
-  left: 0;
-  right: 0;
-  background-color: 'white';
-  border: '1px solid #ccc';
-  list-style: 'none';
-  margin: 0;
-  padding: 0;
-  z-Index: 1000;
-  max-Height: '150px';
-  overflow-Y: 'auto';
-}
-
-.liTermes{
-  padding: '6px 10px';
-  cursor: 'pointer';
-  border-bottom: '1px solid #eee'
-}
