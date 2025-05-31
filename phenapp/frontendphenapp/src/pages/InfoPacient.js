@@ -23,17 +23,7 @@ function InfoPacient(){
     const malaltia = location.state?.malaltia;
     const gen = location.state?.gen;
     console.log("les dades del pacient a infopacient són")
-    //console.log(id)
-    //console.log(caracteristiques)
-    //console.log("més dades")
-    //console.log(codi)
-    //console.log(clinic)  //arriba el nom del clínic
-    //console.log(idclinic)
-    //console.log(malaltia)
-    //console.log(gen)
-    //console.log("fi de les dades del pacient")
-    //console.log(malalties)
-
+    
     const handleClick = (event) => {
         event.preventDefault();
         axios.delete('http://localhost:8000/api/accio_pacient/', {

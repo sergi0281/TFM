@@ -13,7 +13,7 @@ class FeatureAdmin(admin.ModelAdmin):
 
 admin.site.register(Clinic)
 #admin.site.register(Feature)
-admin.site.register(Disease)
+#admin.site.register(Disease)
 admin.site.register(Pacient,PacientAdmin)
 admin.site.register(Feature, FeatureAdmin)
 

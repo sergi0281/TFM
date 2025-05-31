@@ -21,10 +21,9 @@ class ClinicSerializer(serializers.ModelSerializer):
 class PacientSerializer(serializers.ModelSerializer):
         caracteristiques = FeatureSerializer(many=True, read_only=True)
         nom_clinic = serializers.CharField(source='clinic.nom', read_only=True)
-        #malalties = DiseaseSerializer(many=True, read_only=True)
 
         class Meta:
             model = Pacient
             
-            #fields = '__all__'  ## 
-            fields = ['id','codi_pacient','sexe','clinic','caracteristiques','gen','malaltia','nom_clinic']
+            fields = ['id','codi_pacient','sexe','clinic','caracteristiques','gen','malaltia',
+                      'nom_clinic']

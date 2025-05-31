@@ -83,7 +83,6 @@ function Login() {
         <button className="button" onClick = {() => {navigate('/');}}>Torna
         </button>
         </main>
-      <Footer />
     </div>
   );
 }

@@ -1,11 +1,6 @@
 import React from 'react';
 import { ComposedChart,XAxis,YAxis,Tooltip,ResponsiveContainer,Customized } from 'recharts';
 
-
-    // <div>
-    //    <p>{props.paraula}</p>
-    //</div>
-
 function Heatmap(props){ 
   console.log("el tretsPacient i el TretsGen són així")
   //console.log(props.tretsPacient)
@@ -13,42 +8,22 @@ function Heatmap(props){
    // Comptem els pacients que tenen cada tret
   const data = props.tretsGen.map((tret) => {
     let count = 0;
-    //Object.values(props.tretsPacient).forEach((pacient) => {
-    //  console.log('Tret:', tret, '| Pacient té el tret?', pacient[tret]);
-    //  if (pacient[tret]) count++;
-    //});
-    //return { tret, count };
     Object.values(props.tretsPacient).forEach((pacient) => {
-      //if (pacient.caracteristiques) {
-      //  console.log('Tret actual:', tret);
-      //  console.log('Característiques del pacient:', pacient.caracteristiques);
-      //  pacient.caracteristiques.forEach((carac) => {
-      //    console.log('Comparant:', carac, '===', tret, '?', carac === tret);
-      //  });
-      //}
       if (pacient.caracteristiques && pacient.caracteristiques.some((carac) => carac.codi === tret)) {
         count++;
       }
     });
     return { tret, count };
   });
-  //a cada element li associem el nombre màxim d'aparicions d'aquell gen
-  //en maxCount guardem el nombre de cops que apareix el tret que més cops es repeteix
-  //això ens servirà per fer la gradació de colors en el heatmap
+  
   const maxCount = Math.max(...data.map((element) => element.count), 1);
 
-  // Heatmap és un component privat dins del component Prova4
-  // a payload guardem informació per cada tret, és a dir, quin tret
-  // és i quants cops apareix
   const Heatmap = (props) => {
     const { height, width, x, y, payload, index } = props;
 
     const cellHeight = 30;
     const intensity = Math.round((payload.count / maxCount) * 255);
-    //i definim el color
     const color = `rgb(255, ${255 - intensity}, ${255 - intensity})`;
-    // la g representa un grup d'elements; conté rect i text
-    //console.log('DATA PER AL HEATMAP:', data);
     return (
       <g>
         <rect

@@ -1,16 +1,10 @@
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-//import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
-//import logo from "../logos/logo.png";
-//import carpetanegra from "../logos/carpetanegra.png";
-//import usuari from "../logos/usuari.png";
 import Pacient from "../components/Pacient";
-//import Logo from "../components/Logo";
-//import Sessio from "../components/Sessio";
+import NouPacient from "../components/NouPacient"
 import GraficaBarres from "../components/GraficaBarres";
 import PacientsPerGen from "../components/PacientsPerGen";
-//import TretsComuns from "../components/TretsComuns";
 import axios from 'axios';
 import HeaderLogat from "../components/HeaderLogat";
 
@@ -19,21 +13,9 @@ function InicialClinic(){
   const location = useLocation();
   const nom = location.state?.nom; 
   const id = location.state?.id; 
-  console.log("a inicialClinic tinc")
-  console.log(id)
-  console.log(nom)
   
-  //<GraficaBarres idclinic={id} pacients={pacients} />
-  //<TretsComuns idclinic={id} pacients={pacients} />
-  //<PacientsPerGen idclinic={id} pacients={pacients}/>
   const [pacients, setPacients] = useState([]);
   
-  //useEffect(() => {
-  //  axios.get(`http://localhost:8000/api/pacients/?idclinic=${id}`)
-  //    .then(res => setPacients(res.data))
-  //    .catch(err => console.error(err));
-  //}, []);
-
   useEffect(() => {
     axios.post('http://localhost:8000/api/pacients/', 
       {
@@ -47,21 +29,30 @@ function InicialClinic(){
         }
       })
       .then(response => {
-        console.log("pacients rebuts: ", response.data)
         setPacients(response.data);
-        console.log(response.data);
       })
       .catch(error => {
         console.error('Error obtenint usuari:', error);
       });
   },[]); //aquí es tanca el useEffect 
 
+  
     return(
         <div className="App">
             <HeaderLogat nom={nom} />
             <div>
               <GraficaBarres idclinic={id} pacients={pacients} />
             </div>
+             <button className="button" onClick = {() => {navigate('/components/NouPacient'
+                    ,{
+                        state: {
+                            clinic: nom,
+                            idclinic: id,
+                        }
+                    }
+                    );}}>
+                Afegir pacient
+            </button> 
             <div>
               <h2> Pacients de {nom} </h2>
               {pacients.map((pacient, index) => (

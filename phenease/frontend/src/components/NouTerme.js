@@ -134,10 +134,6 @@ function NouTerme() {
       <div className="App">
         <Header />
         <main className="App-main">
-          <div>
-            <strong>{primerTerme.id} </strong>: {primerTerme.nom}
-            <strong>{segonTerme.id} </strong>: {segonTerme.nom}
-          </div>
           <p>
             Afegeix el nou Terme
           </p>

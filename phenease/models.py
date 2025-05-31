@@ -18,8 +18,8 @@ class ClinicManager(BaseUserManager):
     def create(self, email, password=None, **extra_fields):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)  # Xifra la contrasenya
-        user.save(using=self._db)  # Guarda l'usuari a la base de dades
+        user.set_password(password) 
+        user.save(using=self._db)  
         return user
 
 class Clinic(AbstractBaseUser):
@@ -62,8 +62,8 @@ class Pacient(models.Model):
     sexe = models.CharField(max_length=1, choices=SEXE_CHOICES)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
     caracteristiques = models.ManyToManyField(Feature, blank=True)
-    malaltia = models.CharField(max_length=255, unique=False, blank=True)
-    gen = models.CharField(max_length=255, unique=False, blank=True)
+    malaltia = models.CharField(max_length=255, unique=False, blank=True, default="desconeguda")
+    gen = models.CharField(max_length=255, unique=False, blank=True, default="desconeguda")
 
     def __str__(self):
         return f"{self.codi_pacient}"

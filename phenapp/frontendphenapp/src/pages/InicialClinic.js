@@ -21,9 +21,6 @@ function InicialClinic(){
   const location = useLocation();
   const nom = location.state?.nom; 
   const id = location.state?.id; 
-  console.log("el nom i el id del clínic a inicial clínic és:")
-  console.log(nom)
-  console.log(id)
   
   //<GraficaBarres idclinic={id} pacients={pacients} />
   //<TretsComuns idclinic={id} pacients={pacients} />
